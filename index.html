@@ -41,6 +41,14 @@
     .panel { padding-top:15px; }
     .panel[hidden] { display:none; }
     .info { margin-bottom:9px; padding:13px; border:1px solid var(--line); border-radius:14px; font-size:13px; line-height:1.55; }
+    .parking-title { margin:18px 0 9px; color:var(--navy); font-size:15px; }
+    .parking { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+    .parking strong { display:block; margin-bottom:3px; }
+    .parking p { margin:0; color:#5e7884; font-size:12px; }
+    .parking-status { flex-shrink:0; padding:5px 8px; border-radius:99px; font-size:11px; font-weight:800; }
+    .parking-status.busy { background:#fff0f0; color:#c52727; }
+    .parking-status.normal { background:#fff8df; color:#9a6900; }
+    .parking-status.quiet { background:#edf9f2; color:#16824c; }
     .reserve { width:100%; margin-top:10px; padding:10px; border:1px solid #93dce0; border-radius:10px; background:#edffff; color:#076d82; font:inherit; font-size:12px; font-weight:800; cursor:pointer; }
     .retry { width:100%; margin-top:20px; padding:14px; border:0; border-radius:15px; background:var(--blue); color:#fff; font:inherit; font-weight:800; cursor:pointer; }
     .modal-backdrop { position:fixed; inset:0; z-index:10; display:grid; place-items:end center; padding:16px; background:#001c2a88; }
@@ -107,7 +115,11 @@
         route:['송정 해수욕장 · 부산 해운대구 송정해변로 36','서프홀릭 송정본점','료미 송정점 → 문토스트 본점'],
         sport:['서프홀릭 송정본점 · 부산 해운대구 송정구길 47 1층','입문자 패키지와 장비 대여를 이용할 수 있어요. 파도와 기상은 출발 전에 꼭 확인해 주세요.'],
         food:['료미 송정점 · 부산 해운대구 송정광정로 87 1층 · 오션뷰 퓨전 일식','문토스트 본점 · 부산 해운대구 송정해변로 16 · 서핑 뒤에 먹기 좋은 치즈 토스트'],
-        traffic:['동해선 송정역 2번 출구에서 도보 약 10분','185번 버스 이용 후 송정해수욕장 입구 정류장에서 하차']
+        traffic:['동해선 송정역 2번 출구에서 도보 약 10분','185번 버스 이용 후 송정해수욕장 입구 정류장에서 하차'],
+        parking:[
+          {name:'송정해수욕장 공영주차장', detail:'해변 인근 · 주말 낮에는 일찍 만차가 될 수 있어요.', status:'혼잡', className:'busy'},
+          {name:'송정역 공영주차장', detail:'송정역 주변 · 해변까지 도보 이동이 필요해요.', status:'보통', className:'normal'}
+        ]
       },
       {
         name:'⛵ 럭셔리 선셋 요트 세일러',
@@ -117,7 +129,11 @@
         route:['광안리 해수욕장 & 수영만 요트경기장','크레이지서프 광안리 → 요트탈래 부산본점','톤쇼우 광안점 → Clam 광안리점'],
         sport:['크레이지서프 광안리 · 부산 수영구 광안해변로54번길 3 · 광안대교를 보며 SUP 체험','요트탈래 부산본점 · 부산 해운대구 해운대해변로 84 수영만요트경기장 · 선셋 시간대는 미리 예약해 주세요.'],
         food:['톤쇼우 광안점 · 부산 수영구 광안해변로279번길 13 · 프리미엄 돈카츠','Clam 광안리점 · 부산 수영구 광안해변로 225 · 타파스와 와인을 즐길 수 있어요.'],
-        traffic:['2호선 광안역 3번 또는 5번 출구에서 백사장 방향으로 도보 약 10분','요트경기장 방문 전에는 주차 가능 여부와 출항 시간을 확인해 주세요.']
+        traffic:['2호선 광안역 3번 또는 5번 출구에서 백사장 방향으로 도보 약 10분','요트경기장 방문 전에는 주차 가능 여부와 출항 시간을 확인해 주세요.'],
+        parking:[
+          {name:'광안리해수욕장 공영주차장', detail:'광안리 해변 인근 · 야경 시간대에는 대기 차량이 많을 수 있어요.', status:'혼잡', className:'busy'},
+          {name:'민락수변공원 공영주차장', detail:'민락수변공원 인근 · 저녁 전 방문 시 비교적 여유로워요.', status:'보통', className:'normal'}
+        ]
       },
       {
         name:'🌊 자연 감성 오션 어드벤처',
@@ -127,7 +143,11 @@
         route:['영도 태종대 & 감지해변','태종대 곤포 유람선','자갈마당 해녀촌 → 피아크'],
         sport:['태종대 곤포 유람선 · 부산 영도구 감지해변길 79 · 해안 절벽과 오륙도 풍경을 둘러볼 수 있어요.','해안 산책에는 편한 신발과 바람막이를 챙기는 것을 추천해요.'],
         food:['태종대 자갈마당 해녀촌 · 부산 영도구 감지해변길 81 · 숯불 조개구이','피아크(P.ARK) · 부산 영도구 해양로195번길 180 · 항만 풍경을 볼 수 있는 복합문화 카페'],
-        traffic:['부산역 7번 출구 인근 정류장에서 88번 또는 101번 버스 이용','태종대 종점에서 내려 산책로를 따라 이동하세요.']
+        traffic:['부산역 7번 출구 인근 정류장에서 88번 또는 101번 버스 이용','태종대 종점에서 내려 산책로를 따라 이동하세요.'],
+        parking:[
+          {name:'태종대 유원지 공영주차장', detail:'태종대 입구 인근 · 유람선 운항 시간대에 차량이 몰릴 수 있어요.', status:'보통', className:'normal'},
+          {name:'감지해변 주변 주차 공간', detail:'감지해변 방향 · 공간이 제한적이어서 대중교통 이용을 권장해요.', status:'혼잡', className:'busy'}
+        ]
       },
       {
         name:'🏖️ 여유로운 해변 힐링러',
@@ -137,7 +157,11 @@
         route:['다대포 해수욕장 & 생태탐방로','다대포 카이트서핑 패들보드 클럽','할매집 → 다대포 낙조분수'],
         sport:['다대포 카이트서핑 패들보드 클럽 · 부산 사하구 다대등대로 14 · 얕은 수심에서 패들보드를 즐길 수 있어요.','일몰과 낙조분수 운영 시간은 방문 전에 확인해 주세요.'],
         food:['할매집 · 부산 사하구 다대하나거리 40 · 해물파전과 문어삼합','웨이브온 커피 · 부산 기장군 장안읍 해맞이로 286 · 기장으로 코스를 넓힐 때 들르기 좋아요.'],
-        traffic:['1호선 다대포해수욕장역 1번 또는 2번 출구에서 백사장까지 바로 이동할 수 있어요.','차량 이용 시 다대포 해변공원 주차장 위치를 미리 확인해 주세요.']
+        traffic:['1호선 다대포해수욕장역 1번 또는 2번 출구에서 백사장까지 바로 이동할 수 있어요.','차량 이용 시 다대포 해변공원 주차장 위치를 미리 확인해 주세요.'],
+        parking:[
+          {name:'다대포 해변공원 주차장', detail:'해수욕장 인근 · 해변이 넓어 주간에는 비교적 여유로운 편이에요.', status:'한적', className:'quiet'},
+          {name:'다대포 꿈의 낙조분수 주변 주차장', detail:'낙조분수 운영 전후와 일몰 시간에는 차량이 몰릴 수 있어요.', status:'보통', className:'normal'}
+        ]
       }
     ];
 
@@ -181,10 +205,15 @@
         </div>
         <iframe class="map-frame" title="${result.district} 지도" src="${result.mapUrl}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         <p class="map-note">${result.densityNote} 혼잡도는 실시간 수치가 아닌 코스 선택을 돕기 위한 대략적인 안내입니다.</p>`;
-      ['sport','food','traffic'].forEach(key => {
+      ['sport','food'].forEach(key => {
         const buttonLabel = key === 'sport' ? '레저 예약 신청' : key === 'food' ? '맛집 예약·웨이팅 신청' : '';
         $(`#${key}`).innerHTML = result[key].map(item => `<article class="info">${item}${buttonLabel ? `<button class="reserve" data-place="${item.replace(/"/g, '&quot;')}">${buttonLabel}</button>` : ''}</article>`).join('');
       });
+      $('#traffic').innerHTML = `
+        ${result.traffic.map(item => `<article class="info">${item}</article>`).join('')}
+        <h3 class="parking-title">🅿️ 주변 주차장</h3>
+        ${result.parking.map(parking => `<article class="info parking"><div><strong>${parking.name}</strong><p>${parking.detail}</p></div><span class="parking-status ${parking.className}">예상 ${parking.status}</span></article>`).join('')}
+        <p class="map-note">주차 혼잡도는 실시간 정보가 아닌 방문 시간대 기준의 예상 안내입니다. 출발 전 주차장 운영 정보와 빈자리 여부를 확인해 주세요.</p>`;
       $('#bar').style.width = '100%';
     }
 
