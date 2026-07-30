@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 0.5 seconds
+Output:
 <!doctype html>
 <html lang="ko">
 <head>
@@ -10,6 +13,8 @@
     body { margin:0; background:linear-gradient(135deg,#d9f2f4,#e8effb); color:var(--ink); font-family:system-ui,-apple-system,"Malgun Gothic",sans-serif; }
     .app { max-width:480px; min-height:100vh; margin:auto; padding:24px 20px 32px; background:#fff; box-shadow:0 0 35px #164c6530; }
     .eyebrow { margin:0; color:var(--blue); font-size:11px; font-weight:800; letter-spacing:.1em; }
+    .topbar { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .account-button { flex-shrink:0; min-height:34px; padding:8px 11px; border:1px solid #b9e5e7; border-radius:999px; background:#f1ffff; color:#08707c; font:inherit; font-size:12px; font-weight:800; cursor:pointer; }
     h1 { margin:8px 0 20px; font-size:25px; line-height:1.35; }
     .count { margin:0 0 8px; color:var(--blue); font-size:13px; font-weight:800; }
     .progress { height:8px; overflow:hidden; border-radius:8px; background:#e9f2f3; }
@@ -62,12 +67,26 @@
     .modal-actions button { flex:1; padding:12px; border-radius:11px; font:inherit; font-weight:800; cursor:pointer; }
     .cancel { border:1px solid var(--line); background:#fff; color:#637b86; }
     .submit { border:0; background:var(--blue); color:#fff; }
+    .auth-backdrop[hidden] { display:none; }
+    .auth-backdrop { position:fixed; inset:0; z-index:20; display:grid; place-items:center; padding:20px; background:#001c2a88; }
+    .auth-modal { width:min(420px,100%); padding:22px; border-radius:22px; background:#fff; box-shadow:0 12px 40px #001c2a55; }
+    .auth-modal h2 { margin:0 0 6px; font-size:21px; }
+    .auth-help { margin:0 0 16px; color:#607a86; font-size:12px; line-height:1.5; }
+    .auth-switch { display:flex; gap:8px; margin-bottom:14px; }
+    .auth-switch button { flex:1; padding:10px; border:1px solid var(--line); border-radius:10px; background:#fff; color:#637b86; font:inherit; font-size:13px; font-weight:800; cursor:pointer; }
+    .auth-switch button.active { border-color:var(--aqua); background:#efffff; color:#08707c; }
+    .auth-message { min-height:18px; margin:10px 0 0; font-size:12px; line-height:1.4; }
+    .auth-message.error { color:#c52727; }
+    .auth-message.success { color:#16824c; }
     @keyframes enter { from { opacity:0; transform:translateX(18px); } to { opacity:1; transform:none; } }
   </style>
 </head>
 <body>
   <main class="app">
-    <p class="eyebrow">BUSAN SEA LEISURE</p>
+    <div class="topbar">
+      <p class="eyebrow">BUSAN SEA LEISURE</p>
+      <button id="accountButton" class="account-button" type="button">로그인</button>
+    </div>
     <h1>🌊 나만의 부산 바다<br>레저 취향 찾기</h1>
 
     <section id="quiz">
@@ -90,6 +109,24 @@
       <button id="retry" class="retry">테스트 다시 하기</button>
     </section>
   </main>
+
+  <div id="authModal" class="auth-backdrop" hidden>
+    <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+      <h2 id="authTitle">부산 바다 앱 로그인</h2>
+      <p id="authHelp" class="auth-help">이메일과 비밀번호로 로그인해 주세요.</p>
+      <div class="auth-switch" aria-label="인증 방식">
+        <button id="loginMode" class="active" type="button">로그인</button>
+        <button id="signupMode" type="button">회원가입</button>
+      </div>
+      <form id="authForm" class="form-grid">
+        <label>이메일 <input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com" required></label>
+        <label>비밀번호 <input id="authPassword" type="password" autocomplete="current-password" minlength="6" placeholder="6자 이상" required></label>
+        <button id="authSubmit" class="submit" type="submit">로그인</button>
+      </form>
+      <p id="authMessage" class="auth-message" role="status"></p>
+      <div class="modal-actions"><button id="authClose" class="cancel" type="button">닫기</button></div>
+    </section>
+  </div>
 
   <script>
     // 선택 순서는 A=0, B=1입니다. 결과는 선택 성향에 따라 계산됩니다.
@@ -271,5 +308,121 @@
 
     renderQuestion();
   </script>
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
+    import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
+
+    // Firebase 웹 앱 설정: 이메일/비밀번호는 Firebase Authentication에서 안전하게 처리됩니다.
+    const firebaseConfig = {
+      apiKey: 'AIzaSyCNd7gCskT--idV3_LCvCvyNNNf0rM-DY0',
+      authDomain: 'busan-sea-app.firebaseapp.com',
+      projectId: 'busan-sea-app',
+      storageBucket: 'busan-sea-app.firebasestorage.app',
+      messagingSenderId: '377922115846',
+      appId: '1:377922115846:web:f7d952cdc2e5300a882687',
+      measurementId: 'G-TTHXGYSFTW'
+    };
+
+    const auth = getAuth(initializeApp(firebaseConfig));
+    const accountButton = document.querySelector('#accountButton');
+    const authModal = document.querySelector('#authModal');
+    const authForm = document.querySelector('#authForm');
+    const authEmail = document.querySelector('#authEmail');
+    const authPassword = document.querySelector('#authPassword');
+    const authMessage = document.querySelector('#authMessage');
+    const authHelp = document.querySelector('#authHelp');
+    const authSubmit = document.querySelector('#authSubmit');
+    const loginMode = document.querySelector('#loginMode');
+    const signupMode = document.querySelector('#signupMode');
+    let mode = 'login';
+    let currentUser = null;
+
+    function setMessage(message = '', type = '') {
+      authMessage.textContent = message;
+      authMessage.className = `auth-message ${type}`;
+    }
+
+    function setMode(nextMode) {
+      mode = nextMode;
+      const signingUp = mode === 'signup';
+      loginMode.classList.toggle('active', !signingUp);
+      signupMode.classList.toggle('active', signingUp);
+      authSubmit.textContent = signingUp ? '회원가입' : '로그인';
+      authHelp.textContent = signingUp ? '비밀번호는 6자 이상으로 입력해 주세요.' : '이메일과 비밀번호로 로그인해 주세요.';
+      authPassword.autocomplete = signingUp ? 'new-password' : 'current-password';
+      setMessage();
+    }
+
+    function openAuth() {
+      setMode('login');
+      authForm.reset();
+      authModal.hidden = false;
+      authEmail.focus();
+    }
+
+    function closeAuth() {
+      authModal.hidden = true;
+      setMessage();
+    }
+
+    function friendlyError(error) {
+      const codes = {
+        'auth/invalid-credential': '이메일 또는 비밀번호가 맞지 않습니다.',
+        'auth/email-already-in-use': '이미 가입된 이메일입니다. 로그인해 주세요.',
+        'auth/invalid-email': '이메일 주소 형식을 확인해 주세요.',
+        'auth/weak-password': '비밀번호는 6자 이상으로 입력해 주세요.',
+        'auth/network-request-failed': '네트워크 연결을 확인해 주세요.',
+        'auth/too-many-requests': '요청이 많습니다. 잠시 후 다시 시도해 주세요.'
+      };
+      return codes[error.code] || '로그인 처리 중 문제가 생겼습니다. 잠시 후 다시 시도해 주세요.';
+    }
+
+    accountButton.addEventListener('click', async () => {
+      if (currentUser) {
+        await signOut(auth);
+        return;
+      }
+      openAuth();
+    });
+    loginMode.addEventListener('click', () => setMode('login'));
+    signupMode.addEventListener('click', () => setMode('signup'));
+    document.querySelector('#authClose').addEventListener('click', closeAuth);
+    authModal.addEventListener('click', event => { if (event.target === authModal) closeAuth(); });
+
+    authForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      const email = authEmail.value.trim();
+      const password = authPassword.value;
+      authSubmit.disabled = true;
+      authSubmit.textContent = '처리 중…';
+      setMessage();
+      try {
+        if (mode === 'signup') {
+          await createUserWithEmailAndPassword(auth, email, password);
+          setMessage('회원가입이 완료되었습니다.', 'success');
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+          closeAuth();
+        }
+      } catch (error) {
+        setMessage(friendlyError(error), 'error');
+      } finally {
+        authSubmit.disabled = false;
+        authSubmit.textContent = mode === 'signup' ? '회원가입' : '로그인';
+      }
+    });
+
+    onAuthStateChanged(auth, user => {
+      currentUser = user;
+      if (user) {
+        const nickname = (user.email || '내 계정').split('@')[0];
+        accountButton.textContent = `${nickname} · 로그아웃`;
+        closeAuth();
+      } else {
+        accountButton.textContent = '로그인';
+      }
+    });
+  </script>
 </body>
 </html>
+
