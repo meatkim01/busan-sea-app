@@ -51,6 +51,12 @@
     .parking-status.busy { background:#fff0f0; color:#c52727; }
     .parking-status.normal { background:#fff8df; color:#9a6900; }
     .parking-status.quiet { background:#edf9f2; color:#16824c; }
+    .directions { margin-top:14px; padding:15px; border:1px solid #bfe9ec; border-radius:15px; background:linear-gradient(135deg,#efffff,#f6fbff); }
+    .directions strong { display:block; margin-bottom:5px; color:#07567e; font-size:14px; }
+    .directions p { margin:0; color:#51727e; font-size:12px; line-height:1.5; }
+    .directions-button { width:100%; margin-top:11px; padding:11px; border:0; border-radius:10px; background:#087eb4; color:#fff; font:inherit; font-size:12px; font-weight:800; cursor:pointer; }
+    .directions-status { min-height:18px; margin:9px 0 0; color:#51727e; font-size:11px; line-height:1.4; }
+    .directions-status.error { color:#c52727; }
     .reserve { width:100%; margin-top:10px; padding:10px; border:1px solid #93dce0; border-radius:10px; background:#edffff; color:#076d82; font:inherit; font-size:12px; font-weight:800; cursor:pointer; }
     .retry { width:100%; margin-top:20px; padding:14px; border:0; border-radius:15px; background:var(--blue); color:#fff; font:inherit; font-weight:800; cursor:pointer; }
     .modal-backdrop { position:fixed; inset:0; z-index:10; display:grid; place-items:end center; padding:16px; background:#001c2a88; }
@@ -145,6 +151,7 @@
         name:'🏄‍♂️ 다이내믹 익스트림 서퍼',
         description:'에너지 넘치는 파도와 새로운 기술에 도전하는 걸 좋아하는 타입이에요.',
         district:'해운대구 · 송정 해수욕장', density:'혼잡', densityClass:'busy', densityNote:'주말 낮과 파도가 좋은 날에는 서핑 수요가 몰려 혼잡할 수 있어요.',
+        destination:{name:'송정 해수욕장',lat:35.179,lng:129.201},
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.184%2C35.173%2C129.211%2C35.188&layer=mapnik&marker=35.179%2C129.201',
         route:['송정 해수욕장 · 부산 해운대구 송정해변로 36','서프홀릭 송정본점','료미 송정점 → 문토스트 본점'],
         sport:['서프홀릭 송정본점 · 부산 해운대구 송정구길 47 1층','입문자 패키지와 장비 대여를 이용할 수 있어요. 파도와 기상은 출발 전에 꼭 확인해 주세요.'],
@@ -159,6 +166,7 @@
         name:'⛵ 럭셔리 선셋 요트 세일러',
         description:'반짝이는 야경과 노을을 보며 여유롭게 바다를 즐기는 타입이에요.',
         district:'수영구 · 광안리 해수욕장', density:'보통', densityClass:'normal', densityNote:'저녁과 주말에는 광안대교 야경을 보려는 방문객이 늘어날 수 있어요.',
+        destination:{name:'광안리 해수욕장',lat:35.153,lng:129.118},
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.105%2C35.147%2C129.125%2C35.160&layer=mapnik&marker=35.153%2C129.118',
         route:['광안리 해수욕장 & 수영만 요트경기장','크레이지서프 광안리 → 요트탈래 부산본점','톤쇼우 광안점 → Clam 광안리점'],
         sport:['크레이지서프 광안리 · 부산 수영구 광안해변로54번길 3 · 광안대교를 보며 SUP 체험','요트탈래 부산본점 · 부산 해운대구 해운대해변로 84 수영만요트경기장 · 선셋 시간대는 미리 예약해 주세요.'],
@@ -173,6 +181,7 @@
         name:'🌊 자연 감성 오션 어드벤처',
         description:'절경과 자연 해안선을 따라 바다를 깊이 느끼고 싶은 타입이에요.',
         district:'영도구 · 태종대', density:'한적', densityClass:'quiet', densityNote:'도심 해변보다 비교적 여유롭지만, 유람선 운항 시간대에는 방문객이 모일 수 있어요.',
+        destination:{name:'태종대',lat:35.052,lng:129.073},
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.061%2C35.044%2C129.083%2C35.060&layer=mapnik&marker=35.052%2C129.073',
         route:['영도 태종대 & 감지해변','태종대 곤포 유람선','자갈마당 해녀촌 → 피아크'],
         sport:['태종대 곤포 유람선 · 부산 영도구 감지해변길 79 · 해안 절벽과 오륙도 풍경을 둘러볼 수 있어요.','해안 산책에는 편한 신발과 바람막이를 챙기는 것을 추천해요.'],
@@ -187,6 +196,7 @@
         name:'🏖️ 여유로운 해변 힐링러',
         description:'조용한 해변에서 천천히 쉬며 바다의 시간을 즐기고 싶은 타입이에요.',
         district:'사하구 · 다대포 해수욕장', density:'한적', densityClass:'quiet', densityNote:'해변이 넓어 여유로운 편이에요. 다만 일몰과 낙조분수 시간에는 방문객이 늘어납니다.',
+        destination:{name:'다대포 해수욕장',lat:35.052,lng:128.972},
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=128.960%2C35.041%2C128.984%2C35.060&layer=mapnik&marker=35.052%2C128.972',
         route:['다대포 해수욕장 & 생태탐방로','다대포 카이트서핑 패들보드 클럽','할매집 → 다대포 낙조분수'],
         sport:['다대포 카이트서핑 패들보드 클럽 · 부산 사하구 다대등대로 14 · 얕은 수심에서 패들보드를 즐길 수 있어요.','일몰과 낙조분수 운영 시간은 방문 전에 확인해 주세요.'],
@@ -247,6 +257,12 @@
         ${result.traffic.map(item => `<article class="info">${item}</article>`).join('')}
         <h3 class="parking-title">🅿️ 주변 주차장</h3>
         ${result.parking.map(parking => `<article class="info parking"><div><strong>${parking.name}</strong><p>${parking.detail}</p></div><span class="parking-status ${parking.className}">예상 ${parking.status}</span></article>`).join('')}
+        <section class="directions">
+          <strong>📍 현재 위치에서 길찾기</strong>
+          <p>현재 위치를 사용해 <b>${result.destination.name}</b>까지의 대중교통 경로를 엽니다.</p>
+          <button class="directions-button" type="button" data-destination-lat="${result.destination.lat}" data-destination-lng="${result.destination.lng}" data-destination-name="${result.destination.name}">현재 위치에서 ${result.destination.name} 가기</button>
+          <p class="directions-status" aria-live="polite">위치 정보는 길찾기 링크 생성에만 사용되며 저장하지 않습니다.</p>
+        </section>
         <p class="map-note">주차 혼잡도는 실시간 정보가 아닌 방문 시간대 기준의 예상 안내입니다. 출발 전 주차장 운영 정보와 빈자리 여부를 확인해 주세요.</p>`;
       $('#bar').style.width = '100%';
     }
@@ -261,9 +277,42 @@
     // 예약 양식은 테스트 결과에서 특정 업체를 선택했을 때만 생성됩니다.
     $('#resultScreen').addEventListener('click', event => {
       const button = event.target.closest('.reserve');
-      if (!button) return;
-      openBooking(button.dataset.place, button.textContent);
+      if (button) {
+        openBooking(button.dataset.place, button.textContent);
+        return;
+      }
+      const directionsButton = event.target.closest('.directions-button');
+      if (directionsButton) openDirections(directionsButton);
     });
+
+    // 위치 권한은 사용자가 길찾기 버튼을 눌렀을 때만 요청하며, 좌표를 저장하지 않습니다.
+    function openDirections(button) {
+      const status = button.parentElement.querySelector('.directions-status');
+      if (!navigator.geolocation) {
+        status.textContent = '이 브라우저에서는 현재 위치 기능을 지원하지 않습니다.';
+        status.classList.add('error');
+        return;
+      }
+      button.disabled = true;
+      button.textContent = '현재 위치 확인 중…';
+      status.classList.remove('error');
+      status.textContent = '위치 권한을 허용하면 대중교통 길찾기를 엽니다.';
+      navigator.geolocation.getCurrentPosition(position => {
+        const origin = `${position.coords.latitude},${position.coords.longitude}`;
+        const destination = `${button.dataset.destinationLat},${button.dataset.destinationLng}`;
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&travelmode=transit`;
+        window.open(url, '_blank', 'noopener');
+        status.textContent = `${button.dataset.destinationName}까지의 대중교통 길찾기를 새 탭에서 열었습니다.`;
+        button.disabled = false;
+        button.textContent = `현재 위치에서 ${button.dataset.destinationName} 가기`;
+      }, error => {
+        const message = error.code === error.PERMISSION_DENIED ? '위치 권한이 필요합니다. 브라우저에서 위치 접근을 허용해 주세요.' : '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.';
+        status.textContent = message;
+        status.classList.add('error');
+        button.disabled = false;
+        button.textContent = `현재 위치에서 ${button.dataset.destinationName} 가기`;
+      }, { enableHighAccuracy:true, timeout:10000, maximumAge:60000 });
+    }
 
     function openBooking(place, actionLabel) {
       const modal = document.createElement('div');
