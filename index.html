@@ -182,4 +182,475 @@
       ['해변의 촉감', '발밑에 닿는 해변은 어디가 더 좋나요?', '맨발로 걷기 좋은 보드라운 모래사장', '파도 소리가 좋은 몽돌·자갈 해변과 바위 해안'],
       ['보고 싶은 풍경', '눈앞에 어떤 바다 풍경이 펼쳐지면 좋겠나요?', '광안대교와 빌딩 불빛이 어우러진 도시 바다', '수평선과 절벽이 시원하게 펼쳐지는 자연 바다'],
       ['바다에 가기 좋은 시간', '오늘 바다의 가장 좋은 시간은 언제인가요?', '햇살 좋은 낮, 물놀이를 마음껏 할 때', '하늘이 물드는 해 질 무렵, 천천히 즐길 때'],
-      ['해변의 분위기', '어떤 해변 �
+      ['해변의 분위기', '어떤 해변 분위기가 더 마음에 드나요?', '음악과 사람들로 북적이는 활기찬 곳', '파도 소리를 들으며 쉬기 좋은 조용한 곳'],
+      ['물에 들어갈 때', '물놀이할 때 더 중요하게 생각하는 것은 무엇인가요?', '따뜻하고 수심이 완만한 바다', '조금 차가워도 맑고 투명한 바다'],
+      ['레저를 즐긴 뒤', '바다에서 신나게 논 다음에는 뭘 하고 싶나요?', '오션뷰 카페나 와인바에서 여유롭게 쉬기', '해녀촌이나 포장마차에서 해산물 즐기기'],
+      ['가는 방법', '바다로 갈 때 더 중요하게 생각하는 기준은 무엇인가요?', '지하철에서 내려 가볍게 걸어갈 수 있는 곳', '드라이브하고 주차까지 편한 곳'],
+      ['오늘의 여행 목표', '이번 바다 여행에서 가장 남기고 싶은 것은 무엇인가요?', '새로운 해양 레저를 제대로 배워 보기', '바다를 배경으로 사진과 추억을 남기기']
+    ];
+
+    const results = [
+      {
+        name:'🏄‍♂️ 다이내믹 익스트림 서퍼',
+        description:'에너지 넘치는 파도와 새로운 기술에 도전하는 걸 좋아하는 타입이에요.',
+        district:'해운대구 · 송정 해수욕장', density:'혼잡', densityClass:'busy', densityNote:'주말 낮과 파도가 좋은 날에는 서핑 수요가 몰려 혼잡할 수 있어요.',
+        destination:{name:'송정 해수욕장',lat:35.179,lng:129.201},
+        mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.184%2C35.173%2C129.211%2C35.188&layer=mapnik&marker=35.179%2C129.201',
+        photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Songjeong%20Beach.jpg?width=1600', page:'https://commons.wikimedia.org/wiki/File:Songjeong_Beach.jpg', credit:'Andrewssi2 · CC BY-SA 3.0'},
+        route:['송정 해수욕장 · 부산 해운대구 송정해변로 36','서프홀릭 부산송정본점','문토스트 본점'],
+        sport:['서프홀릭 부산송정본점 · 부산 해운대구 송정해변로 50 · 송정해수욕장 권역 서핑 강습·장비 대여','입문자 패키지와 장비 대여를 이용할 수 있어요. 파도와 기상은 출발 전에 꼭 확인해 주세요.'],
+        food:['문토스트 본점 · 부산 해운대구 송정해변로 16 · 송정해수욕장 앞에서 들르기 좋은 모차렐라 치즈 토스트'],
+        events:[
+          {title:'송정 서핑 체험', date:'상시 체험', detail:'파도와 기상에 따라 강습·대여 시간이 달라질 수 있습니다. 방문 전 운영처의 당일 공지를 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'Visit Busan 행사 일정'}
+        ],
+        bike:{name:'송정해수욕장 주변 자전거 대여·공용 이용시설', detail:'송정역과 해수욕장 주변의 자전거 대여·공용 이용시설을 지도에서 확인할 수 있어요. 대여 가능 여부·요금·반납 방식은 시설별로 다르므로 방문 전에 확인해 주세요.', query:'송정해수욕장 자전거 대여'},
+        traffic:['동해선 송정역 2번 출구에서 도보 약 10분','185번 버스 이용 후 송정해수욕장 입구 정류장에서 하차'],
+        parking:[
+          {name:'송정해수욕장 공영주차장', detail:'해변 인근 · 주말 낮에는 일찍 만차가 될 수 있어요.', status:'혼잡', className:'busy'},
+          {name:'송정역 공영주차장', detail:'송정역 주변 · 해변까지 도보 이동이 필요해요.', status:'보통', className:'normal'}
+        ]
+      },
+      {
+        name:'⛵ 럭셔리 선셋 요트 세일러',
+        description:'반짝이는 야경과 노을을 보며 여유롭게 바다를 즐기는 타입이에요.',
+        district:'수영구 · 광안리 해수욕장', density:'보통', densityClass:'normal', densityNote:'저녁과 주말에는 광안대교 야경을 보려는 방문객이 늘어날 수 있어요.',
+        destination:{name:'광안리 해수욕장',lat:35.153,lng:129.118},
+        mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.105%2C35.147%2C129.125%2C35.160&layer=mapnik&marker=35.153%2C129.118',
+        photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Gwangalli%20Beach%20Busan%20(44835781985).jpg?width=1200', page:'https://commons.wikimedia.org/wiki/File:Gwangalli_Beach_Busan_(44835781985).jpg', credit:'bryan... · CC BY-SA 2.0'},
+        route:['광안리 해수욕장 & 수영만 요트경기장','크레이지서퍼스 → 요트탈래 부산본점','에쏘 에스프레소바'],
+        sport:['크레이지서퍼스 · 부산 수영구 광남로48번길 29 1층 · 광안리 SUP·서핑 체험','요트탈래 부산본점 · 부산 해운대구 해운대해변로 84 수영만요트경기장 본관 102호 · 선셋 시간대는 미리 예약해 주세요.'],
+        food:['에쏘 에스프레소바 · 부산 수영구 광안해변로 207 · 광안리 해변 산책 중 들르기 좋은 에스프레소 바'],
+        events:[
+          {title:'광안리 M 드론라이트쇼', start:'2026-08-08', end:'2026-08-29', detail:'광안대교를 배경으로 진행되는 드론 공연 일정입니다. 공연 시간·기상 취소 여부는 공식 행사 일정을 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'Visit Busan 공식 일정'},
+          {title:'수영만 요트 체험', date:'상시 체험', detail:'선셋 시간대는 예약 수요가 높습니다. 출항 여부와 탑승 가능 시간은 운영처에서 당일 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'체험 일정 확인'}
+        ],
+        bike:{name:'광안리 해변 주변 자전거 대여·공용 이용시설', detail:'광안리 해변과 민락수변공원 주변 대여·공용 이용시설을 지도에서 찾아볼 수 있어요. 야간과 행사 시간대에는 대여 가능 수량이 달라질 수 있습니다.', query:'광안리해수욕장 자전거 대여'},
+        traffic:['2호선 광안역 3번 또는 5번 출구에서 백사장 방향으로 도보 약 10분','요트경기장 방문 전에는 주차 가능 여부와 출항 시간을 확인해 주세요.'],
+        parking:[
+          {name:'광안리해수욕장 공영주차장', detail:'광안리 해변 인근 · 야경 시간대에는 대기 차량이 많을 수 있어요.', status:'혼잡', className:'busy'},
+          {name:'민락수변공원 공영주차장', detail:'민락수변공원 인근 · 저녁 전 방문 시 비교적 여유로워요.', status:'보통', className:'normal'}
+        ]
+      },
+      {
+        name:'🌊 자연 감성 오션 어드벤처',
+        description:'절경과 자연 해안선을 따라 바다를 깊이 느끼고 싶은 타입이에요.',
+        district:'영도구 · 태종대', density:'한적', densityClass:'quiet', densityNote:'도심 해변보다 비교적 여유롭지만, 유람선 운항 시간대에는 방문객이 모일 수 있어요.',
+        destination:{name:'태종대',lat:35.052,lng:129.073},
+        mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.061%2C35.044%2C129.083%2C35.060&layer=mapnik&marker=35.052%2C129.073',
+        photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Lighthouse%20at%20Taejongdae%2C%20Busan.jpg?width=1600', page:'https://commons.wikimedia.org/wiki/File:Lighthouse_at_Taejongdae,_Busan.jpg', credit:'Seokjoon Choi · CC BY 2.0'},
+        route:['영도 태종대 & 감지해변','태종대곤포유람선','1번해녀집'],
+        sport:['태종대곤포유람선 · 부산 영도구 전망로 24 태종대유원지 내 · 해안 절벽과 오륙도 풍경을 둘러볼 수 있어요.','해안 산책에는 편한 신발과 바람막이를 챙기는 것을 추천해요.'],
+        food:['1번해녀집 · 부산 영도구 감지해변길 81 · 감지해변 바로 앞 조개구이·해물라면'],
+        events:[
+          {title:'태종대 해안 유람선 체험', date:'상시 체험', detail:'파고·기상과 선박 점검에 따라 운항이 바뀔 수 있습니다. 출발 전 당일 운항 여부를 꼭 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'Visit Busan 행사 일정'}
+        ],
+        bike:{name:'태종대 입구 주변 자전거 대여·공용 이용시설', detail:'태종대는 경사와 보행 구간이 많아 자전거 이동 전 경로 난이도를 확인해 주세요. 인근 대여·공용 이용시설은 지도 검색에서 확인할 수 있습니다.', query:'태종대 자전거 대여'},
+        traffic:['부산역 7번 출구 인근 정류장에서 88번 또는 101번 버스 이용','태종대 종점에서 내려 산책로를 따라 이동하세요.'],
+        parking:[
+          {name:'태종대 유원지 공영주차장', detail:'태종대 입구 인근 · 유람선 운항 시간대에 차량이 몰릴 수 있어요.', status:'보통', className:'normal'},
+          {name:'감지해변 주변 주차 공간', detail:'감지해변 방향 · 공간이 제한적이어서 대중교통 이용을 권장해요.', status:'혼잡', className:'busy'}
+        ]
+      },
+      {
+        name:'🏖️ 여유로운 해변 힐링러',
+        description:'조용한 해변에서 천천히 쉬며 바다의 시간을 즐기고 싶은 타입이에요.',
+        district:'사하구 · 다대포 해수욕장', density:'한적', densityClass:'quiet', densityNote:'해변이 넓어 여유로운 편이에요. 다만 일몰과 낙조분수 시간에는 방문객이 늘어납니다.',
+        destination:{name:'다대포 해수욕장',lat:35.052,lng:128.972},
+        mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=128.960%2C35.041%2C128.984%2C35.060&layer=mapnik&marker=35.052%2C128.972',
+        photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Sunset%20at%20Daedapo%20Beach.jpg?width=1600', page:'https://commons.wikimedia.org/wiki/File:Sunset_at_Daedapo_Beach.jpg', credit:'Heathercarreiro · CC BY-SA 4.0'},
+        route:['다대포 해수욕장 & 생태탐방로','다대포해양레포츠센터','다대포 할매집 → 다대포 낙조분수'],
+        sport:['다대포해양레포츠센터 · 부산 사하구 몰운대1길 52 · 카이트보딩·SUP·서핑 등 해양레포츠 프로그램','일몰과 낙조분수 운영 시간은 방문 전에 확인해 주세요. 프로그램 운영 여부와 예약 방법은 출발 전에 확인해 주세요.'],
+        food:['다대포 할매집 · 부산 사하구 몰운대1길 55 1층 · 다대포해수욕장역에서 도보 약 7분, 해물파전과 문어삼합'],
+        events:[
+          {title:'제30회 부산바다축제', start:'2026-08-07', end:'2026-08-13', detail:'다대포를 포함한 부산 해변 일대에서 열리는 여름 해양 축제입니다. 세부 프로그램·장소·우천 변동은 공식 일정에서 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'Visit Busan 공식 일정'},
+          {title:'다대포 해양레저 체험', date:'상시 체험', detail:'기상과 수상 안전 조건에 따라 프로그램이 달라질 수 있습니다. 장비 체험 전 운영 여부를 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'체험 일정 확인'}
+        ],
+        bike:{name:'다대포 해변공원 주변 자전거 대여·공용 이용시설', detail:'다대포 해변공원과 낙동강 하구 자전거길 주변 시설을 지도에서 확인할 수 있어요. 운영 시간과 반납 가능 여부는 대여처별로 확인해 주세요.', query:'다대포해수욕장 자전거 대여'},
+        traffic:['1호선 다대포해수욕장역 1번 또는 2번 출구에서 백사장까지 바로 이동할 수 있어요.','차량 이용 시 다대포 해변공원 주차장 위치를 미리 확인해 주세요.'],
+        parking:[
+          {name:'다대포 해변공원 주차장', detail:'해수욕장 인근 · 해변이 넓어 주간에는 비교적 여유로운 편이에요.', status:'한적', className:'quiet'},
+          {name:'다대포 꿈의 낙조분수 주변 주차장', detail:'낙조분수 운영 전후와 일몰 시간에는 차량이 몰릴 수 있어요.', status:'보통', className:'normal'}
+        ]
+      }
+    ];
+
+    let index = 0;
+    let answers = [];
+    const $ = selector => document.querySelector(selector);
+    const languageLabels = {
+      ko:{login:'로그인', title:'🌊 나만의 부산 바다<br>레저 취향 찾기', sport:'🏄 레저 정보', food:'🍽️ 추천 맛집', traffic:'🚌 교통 안내', events:'🎉 체험·축제', retry:'테스트 다시 하기'},
+      'zh-TW':{login:'登入', title:'🌊 找到專屬你的釜山海洋<br>休閒偏好', sport:'🏄 休閒資訊', food:'🍽️ 推薦美食', traffic:'🚌 交通資訊', events:'🎉 體驗・節慶', retry:'重新測驗'},
+      'zh-CN':{login:'登录', title:'🌊 找到专属你的釜山海洋<br>休闲偏好', sport:'🏄 休闲信息', food:'🍽️ 推荐美食', traffic:'🚌 交通信息', events:'🎉 体验・庆典', retry:'重新测试'},
+      ja:{login:'ログイン', title:'🌊 自分だけの釜山の海<br>レジャータイプ診断', sport:'🏄 レジャー情報', food:'🍽️ おすすめグルメ', traffic:'🚌 交通案内', events:'🎉 体験・祭り', retry:'もう一度診断'},
+      en:{login:'Sign in', title:'🌊 Find Your Perfect<br>Busan Sea Adventure', sport:'🏄 Activities', food:'🍽️ Food nearby', traffic:'🚌 Getting there', events:'🎉 Events', retry:'Take the test again'}
+    };
+
+    function applyLanguage(language) {
+      const labels = languageLabels[language] || languageLabels.ko;
+      document.documentElement.lang = language;
+      document.title = language === 'en' ? 'Find Your Busan Sea Adventure' : '나만의 부산 바다 레저 취향 찾기';
+      $('#accountButton').textContent = labels.login;
+      document.querySelector('h1').innerHTML = labels.title;
+      document.querySelector('[data-tab="sport"]').textContent = labels.sport;
+      document.querySelector('[data-tab="food"]').textContent = labels.food;
+      document.querySelector('[data-tab="traffic"]').textContent = labels.traffic;
+      document.querySelector('[data-tab="events"]').textContent = labels.events;
+      $('#retry').textContent = labels.retry;
+      localStorage.setItem('busanSeaLanguage', language);
+    }
+
+    const savedLanguage = localStorage.getItem('busanSeaLanguage') || 'ko';
+    $('#languageSelect').value = savedLanguage;
+    applyLanguage(savedLanguage);
+    $('#languageSelect').addEventListener('change', event => {
+      const language = event.target.value;
+      applyLanguage(language);
+      const translateSelect = document.querySelector('.goog-te-combo');
+      if (translateSelect && language !== 'ko') {
+        translateSelect.value = language;
+        translateSelect.dispatchEvent(new Event('change'));
+      } else if (language === 'ko') {
+        document.cookie = 'googtrans=/ko/ko;path=/';
+        window.location.reload();
+      }
+    });
+
+    function renderQuestion() {
+      const [category, prompt, optionA, optionB] = questions[index];
+      $('#count').textContent = `${index + 1} / ${questions.length}`;
+      $('#bar').style.width = `${(index / questions.length) * 100}%`;
+      $('#question').innerHTML = `
+        <article class="question">
+          <p class="category">Q${index + 1}. ${category}</p>
+          <h2>${prompt}</h2>
+          <button class="choice" data-answer="0"><b>A</b>${optionA}</button>
+          <button class="choice" data-answer="1"><b>B</b>${optionB}</button>
+        </article>`;
+    }
+
+    $('#question').addEventListener('click', event => {
+      const button = event.target.closest('[data-answer]');
+      if (!button) return;
+      answers.push(Number(button.dataset.answer));
+      index += 1;
+      if (index < questions.length) renderQuestion();
+      else renderResult();
+    });
+
+    function renderResult() {
+      const aCount = answers.filter(answer => answer === 0).length;
+      const resultIndex = aCount >= 7 ? 0 : aCount <= 3 ? 3 : answers[3] === 0 ? 1 : 2;
+      const result = results[resultIndex];
+      $('#quiz').hidden = true;
+      $('#resultScreen').hidden = false;
+      $('#resultCard').innerHTML = `<h2>${result.name}</h2><p>${result.description}</p><div class="route">${result.route.map((item, i) => `<div>${i + 1}. ${item}</div>`).join('')}</div>`;
+      $('#travelMedia').innerHTML = `
+        <img class="spot-photo" src="${result.photo.src}" alt="${result.destination.name} 풍경" loading="lazy" referrerpolicy="no-referrer">
+        <p class="photo-caption">실제 여행지 사진 · <a href="${result.photo.page}" target="_blank" rel="noopener noreferrer">${result.photo.credit} / Wikimedia Commons</a></p>`;
+      $('#mapCard').innerHTML = `
+        <div class="map-heading">
+          <div><strong>📍 ${result.district}</strong><small>실제 약도 · OpenStreetMap</small></div>
+          <span class="density ${result.densityClass}">● 예상 혼잡도 ${result.density}</span>
+        </div>
+        <iframe class="map-frame" title="${result.district} 지도" src="${result.mapUrl}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <div id="weather" class="weather-card" aria-live="polite"><span class="weather-icon">⏳</span><div><strong>${result.destination.name} 현재 날씨</strong><p>날씨 정보를 불러오는 중입니다.</p></div></div>
+        <p class="map-note">${result.densityNote} 예상 혼잡도는 실시간 방문자 수가 아닌 코스 선택용 안내 지표입니다.</p>
+        <section class="congestion-guide" aria-label="예상 혼잡도 판단 기준">
+          <strong>예상 혼잡도 판단 기준</strong>
+          <ul>
+            <li>주말·공휴일·일몰/야간 등 방문 집중 시간대</li>
+            <li>해변 규모와 대표 관광지·행사 밀집도</li>
+            <li>대중교통 접근성 및 인근 공영주차장 이용 여건</li>
+            <li>현재 날씨와 계절별 해양 레저 수요</li>
+          </ul>
+        </section>`;
+      loadWeather(result.destination);
+      ['sport','food'].forEach(key => {
+        const buttonLabel = key === 'sport' ? '레저 예약 신청' : key === 'food' ? '맛집 예약·웨이팅 신청' : '';
+        $(`#${key}`).innerHTML = result[key].map(item => `<article class="info">${item}${buttonLabel ? `<button class="reserve" data-place="${item.replace(/"/g, '&quot;')}">${buttonLabel}</button>` : ''}</article>`).join('');
+      });
+      $('#traffic').innerHTML = `
+        ${result.traffic.map(item => `<article class="info">${item}</article>`).join('')}
+        <h3 class="parking-title">🅿️ 주변 주차장</h3>
+        ${result.parking.map(parking => `<article class="info parking"><div><strong>${parking.name}</strong><p>${parking.detail}</p></div><span class="parking-status ${parking.className}">예상 ${parking.status}</span></article>`).join('')}
+        <section class="directions">
+          <strong>🚲 공용 자전거·대여 시설</strong>
+          <p><b>${result.bike.name}</b><br>${result.bike.detail}</p>
+          <a class="directions-button" href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(result.bike.query)}" target="_blank" rel="noopener noreferrer">주변 자전거 시설 지도에서 찾기</a>
+        </section>
+        <section class="directions">
+          <strong>📍 현재 위치에서 길찾기</strong>
+          <p>현재 위치를 사용해 <b>${result.destination.name}</b>까지의 대중교통 경로를 엽니다.</p>
+          <button class="directions-button" type="button" data-destination-lat="${result.destination.lat}" data-destination-lng="${result.destination.lng}" data-destination-name="${result.destination.name}">현재 위치에서 ${result.destination.name} 가기</button>
+          <p class="directions-status" aria-live="polite">위치 정보는 길찾기 링크 생성에만 사용되며 저장하지 않습니다.</p>
+        </section>
+        <p class="map-note">주차 혼잡도는 실시간 정보가 아닌 방문 시간대 기준의 예상 안내입니다. 출발 전 주차장 운영 정보와 빈자리 여부를 확인해 주세요.</p>`;
+      $('#events').innerHTML = result.events.map(eventInfo => {
+        const state = getEventState(eventInfo);
+        return `<article class="info">
+          <div class="event-meta"><strong>${eventInfo.title}</strong><span class="event-status ${state.className}">${state.label}</span></div>
+          <p class="event-detail"><b>${eventInfo.date || `${eventInfo.start} ~ ${eventInfo.end}`}</b><br>${eventInfo.detail}</p>
+          <a class="event-link" href="${eventInfo.href}" target="_blank" rel="noopener noreferrer">${eventInfo.source}에서 현황 확인 ↗</a>
+        </article>`;
+      }).join('') + `<p class="map-note">행사 기간은 현재 날짜를 기준으로 자동 표시합니다. 상시 체험은 파도·기상·안전 점검에 따라 당일 운영이 달라질 수 있어 운영처 공지를 확인해야 합니다.</p>`;
+      $('#bar').style.width = '100%';
+    }
+
+    // 날짜가 있는 행사는 브라우저의 오늘 날짜로 진행 상태를 계산합니다.
+    // 상시 체험은 외부 운영처의 당일 공지가 필요한 정보이므로 '확인 필요'로 구분합니다.
+    function getEventState(eventInfo) {
+      if (!eventInfo.start || !eventInfo.end) return {label:'운영처 확인 필요', className:'check'};
+      const today = new Date();
+      const start = new Date(`${eventInfo.start}T00:00:00`);
+      const end = new Date(`${eventInfo.end}T23:59:59`);
+      if (today < start) return {label:'예정', className:'soon'};
+      if (today > end) return {label:'종료', className:'done'};
+      return {label:'진행 중', className:'live'};
+    }
+
+    function weatherInfo(code, language = 'ko') {
+      const labels = {
+        ko:['맑음','대체로 맑음','흐림','안개','이슬비','비','눈','뇌우','날씨 정보'],
+        'zh-TW':['晴朗','大致晴朗','多雲','有霧','毛毛雨','下雨','下雪','雷雨','天氣資訊'],
+        'zh-CN':['晴朗','大致晴朗','多云','有雾','毛毛雨','下雨','下雪','雷雨','天气信息'],
+        ja:['晴れ','おおむね晴れ','曇り','霧','霧雨','雨','雪','雷雨','天気情報'],
+        en:['Clear','Mostly clear','Cloudy','Foggy','Drizzle','Rain','Snow','Thunderstorm','Weather']
+      }[language] || ['Clear','Mostly clear','Cloudy','Foggy','Drizzle','Rain','Snow','Thunderstorm','Weather'];
+      if ([0].includes(code)) return ['☀️', labels[0]];
+      if ([1,2].includes(code)) return ['🌤️', labels[1]];
+      if ([3].includes(code)) return ['☁️', labels[2]];
+      if ([45,48].includes(code)) return ['🌫️', labels[3]];
+      if ([51,53,55,56,57].includes(code)) return ['🌦️', labels[4]];
+      if ([61,63,65,66,67,80,81,82].includes(code)) return ['🌧️', labels[5]];
+      if ([71,73,75,77,85,86].includes(code)) return ['❄️', labels[6]];
+      if ([95,96,99].includes(code)) return ['⛈️', labels[7]];
+      return ['🌊', labels[8]];
+    }
+
+    async function loadWeather(destination) {
+      const weather = $('#weather');
+      if (!weather) return;
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${destination.lat}&longitude=${destination.lng}&current=temperature_2m,wind_speed_10m,weather_code&timezone=Asia%2FSeoul`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('weather');
+        const current = (await response.json()).current;
+        const language = $('#languageSelect').value;
+        const locale = {ko:['현재 날씨','기온','풍속'], 'zh-TW':['目前天氣','氣溫','風速'], 'zh-CN':['当前天气','气温','风速'], ja:['現在の天気','気温','風速'], en:['Current weather','Temperature','Wind']}[language] || ['Current weather','Temperature','Wind'];
+        const [icon, label] = weatherInfo(current.weather_code, language);
+        weather.innerHTML = `<span class="weather-icon">${icon}</span><div><strong>${destination.name} · ${locale[0]} · ${label}</strong><p>${locale[1]} ${Math.round(current.temperature_2m)}°C · ${locale[2]} ${Math.round(current.wind_speed_10m)} km/h</p></div>`;
+      } catch (error) {
+        weather.innerHTML = `<span class="weather-icon">🌊</span><div><strong>${destination.name} 현재 날씨</strong><p>날씨 정보를 가져오지 못했습니다. 잠시 후 다시 확인해 주세요.</p></div>`;
+      }
+    }
+
+    $('#tabs').addEventListener('click', event => {
+      const button = event.target.closest('.tab');
+      if (!button) return;
+      document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab === button));
+      ['sport','food','traffic','events'].forEach(key => { $(`#${key}`).hidden = key !== button.dataset.tab; });
+    });
+
+    // 예약 양식은 테스트 결과에서 특정 업체를 선택했을 때만 생성됩니다.
+    $('#resultScreen').addEventListener('click', event => {
+      const button = event.target.closest('.reserve');
+      if (button) {
+        openBooking(button.dataset.place, button.textContent);
+        return;
+      }
+      const directionsButton = event.target.closest('.directions-button');
+      if (directionsButton) openDirections(directionsButton);
+    });
+
+    // 위치 권한은 사용자가 길찾기 버튼을 눌렀을 때만 요청하며, 좌표를 저장하지 않습니다.
+    function openDirections(button) {
+      const status = button.parentElement.querySelector('.directions-status');
+      if (!navigator.geolocation) {
+        status.textContent = '이 브라우저에서는 현재 위치 기능을 지원하지 않습니다.';
+        status.classList.add('error');
+        return;
+      }
+      button.disabled = true;
+      button.textContent = '현재 위치 확인 중…';
+      status.classList.remove('error');
+      status.textContent = '위치 권한을 허용하면 대중교통 길찾기를 엽니다.';
+      navigator.geolocation.getCurrentPosition(position => {
+        const origin = `${position.coords.latitude},${position.coords.longitude}`;
+        const destination = `${button.dataset.destinationLat},${button.dataset.destinationLng}`;
+        const url = `https://www.google.com/maps/dir/?api=1&origin=${encodeURIComponent(origin)}&destination=${encodeURIComponent(destination)}&travelmode=transit`;
+        window.open(url, '_blank', 'noopener');
+        status.textContent = `${button.dataset.destinationName}까지의 대중교통 길찾기를 새 탭에서 열었습니다.`;
+        button.disabled = false;
+        button.textContent = `현재 위치에서 ${button.dataset.destinationName} 가기`;
+      }, error => {
+        const message = error.code === error.PERMISSION_DENIED ? '위치 권한이 필요합니다. 브라우저에서 위치 접근을 허용해 주세요.' : '현재 위치를 가져오지 못했습니다. 잠시 후 다시 시도해 주세요.';
+        status.textContent = message;
+        status.classList.add('error');
+        button.disabled = false;
+        button.textContent = `현재 위치에서 ${button.dataset.destinationName} 가기`;
+      }, { enableHighAccuracy:true, timeout:10000, maximumAge:60000 });
+    }
+
+    function openBooking(place, actionLabel) {
+      const modal = document.createElement('div');
+      modal.className = 'modal-backdrop';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.innerHTML = `
+        <form class="modal">
+          <h2>${actionLabel}</h2>
+          <p>${place}</p>
+          <div class="form-grid">
+            <label>방문 날짜 <input name="date" type="date" min="${new Date().toISOString().slice(0, 10)}" required></label>
+            <label>희망 시간 <select name="time"><option>오전 10:00</option><option>오후 1:00</option><option>오후 4:00</option><option>오후 7:00</option></select></label>
+            <label>인원 <select name="people"><option>1명</option><option>2명</option><option>3명</option><option>4명 이상</option></select></label>
+            <label>이름 <input name="name" type="text" placeholder="예약자 이름" required></label>
+          </div>
+          <div class="modal-actions"><button type="button" class="cancel">취소</button><button type="submit" class="submit">예약 요청하기</button></div>
+        </form>`;
+      document.body.append(modal);
+      modal.querySelector('[name="name"]').focus();
+      modal.querySelector('.cancel').addEventListener('click', () => modal.remove());
+      modal.addEventListener('click', event => { if (event.target === modal) modal.remove(); });
+      modal.querySelector('form').addEventListener('submit', event => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        alert(`${form.elements.name.value.trim()}님, ${place}\n${form.elements.date.value} ${form.elements.time.value} · ${form.elements.people.value} 예약 요청이 접수되었습니다.\n\n현재는 데모 예약 기능입니다. 실제 예약은 업체 확인 후 진행해 주세요.`);
+        modal.remove();
+      });
+    }
+
+    $('#retry').addEventListener('click', () => {
+      index = 0;
+      answers = [];
+      $('#quiz').hidden = false;
+      $('#resultScreen').hidden = true;
+      document.querySelector('[data-tab="sport"]').click();
+      renderQuestion();
+    });
+
+    renderQuestion();
+  </script>
+  <script>
+    window.googleTranslateElementInit = function () {
+      new google.translate.TranslateElement({pageLanguage:'ko', includedLanguages:'zh-TW,zh-CN,ja,en', autoDisplay:false}, 'google_translate_element');
+    };
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
+    import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
+
+    // Firebase 웹 앱 설정: 이메일/비밀번호는 Firebase Authentication에서 안전하게 처리됩니다.
+    const firebaseConfig = {
+      apiKey: 'AIzaSyCNd7gCskT--idV3_LCvCvyNNNf0rM-DY0',
+      authDomain: 'busan-sea-app.firebaseapp.com',
+      projectId: 'busan-sea-app',
+      storageBucket: 'busan-sea-app.firebasestorage.app',
+      messagingSenderId: '377922115846',
+      appId: '1:377922115846:web:f7d952cdc2e5300a882687',
+      measurementId: 'G-TTHXGYSFTW'
+    };
+
+    const auth = getAuth(initializeApp(firebaseConfig));
+    const accountButton = document.querySelector('#accountButton');
+    const authModal = document.querySelector('#authModal');
+    const authForm = document.querySelector('#authForm');
+    const authEmail = document.querySelector('#authEmail');
+    const authPassword = document.querySelector('#authPassword');
+    const authMessage = document.querySelector('#authMessage');
+    const authHelp = document.querySelector('#authHelp');
+    const authSubmit = document.querySelector('#authSubmit');
+    const loginMode = document.querySelector('#loginMode');
+    const signupMode = document.querySelector('#signupMode');
+    let mode = 'login';
+    let currentUser = null;
+
+    function setMessage(message = '', type = '') {
+      authMessage.textContent = message;
+      authMessage.className = `auth-message ${type}`;
+    }
+
+    function setMode(nextMode) {
+      mode = nextMode;
+      const signingUp = mode === 'signup';
+      loginMode.classList.toggle('active', !signingUp);
+      signupMode.classList.toggle('active', signingUp);
+      authSubmit.textContent = signingUp ? '회원가입' : '로그인';
+      authHelp.textContent = signingUp ? '비밀번호는 6자 이상으로 입력해 주세요.' : '이메일과 비밀번호로 로그인해 주세요.';
+      authPassword.autocomplete = signingUp ? 'new-password' : 'current-password';
+      setMessage();
+    }
+
+    function openAuth() {
+      setMode('login');
+      authForm.reset();
+      authModal.hidden = false;
+      authEmail.focus();
+    }
+
+    function closeAuth() {
+      authModal.hidden = true;
+      setMessage();
+    }
+
+    function friendlyError(error) {
+      const codes = {
+        'auth/invalid-credential': '이메일 또는 비밀번호가 맞지 않습니다.',
+        'auth/email-already-in-use': '이미 가입된 이메일입니다. 로그인해 주세요.',
+        'auth/invalid-email': '이메일 주소 형식을 확인해 주세요.',
+        'auth/weak-password': '비밀번호는 6자 이상으로 입력해 주세요.',
+        'auth/network-request-failed': '네트워크 연결을 확인해 주세요.',
+        'auth/too-many-requests': '요청이 많습니다. 잠시 후 다시 시도해 주세요.'
+      };
+      return codes[error.code] || '로그인 처리 중 문제가 생겼습니다. 잠시 후 다시 시도해 주세요.';
+    }
+
+    accountButton.addEventListener('click', async () => {
+      if (currentUser) {
+        await signOut(auth);
+        return;
+      }
+      openAuth();
+    });
+    loginMode.addEventListener('click', () => setMode('login'));
+    signupMode.addEventListener('click', () => setMode('signup'));
+    document.querySelector('#authClose').addEventListener('click', closeAuth);
+    authModal.addEventListener('click', event => { if (event.target === authModal) closeAuth(); });
+
+    authForm.addEventListener('submit', async event => {
+      event.preventDefault();
+      const email = authEmail.value.trim();
+      const password = authPassword.value;
+      authSubmit.disabled = true;
+      authSubmit.textContent = '처리 중…';
+      setMessage();
+      try {
+        if (mode === 'signup') {
+          await createUserWithEmailAndPassword(auth, email, password);
+          setMessage('회원가입이 완료되었습니다.', 'success');
+        } else {
+          await signInWithEmailAndPassword(auth, email, password);
+          closeAuth();
+        }
+      } catch (error) {
+        setMessage(friendlyError(error), 'error');
+      } finally {
+        authSubmit.disabled = false;
+        authSubmit.textContent = mode === 'signup' ? '회원가입' : '로그인';
+      }
+    });
+
+    onAuthStateChanged(auth, user => {
+      currentUser = user;
+      if (user) {
+        const nickname = (user.email || '내 계정').split('@')[0];
+        accountButton.textContent = `${nickname} · 로그아웃`;
+        closeAuth();
+      } else {
+        accountButton.textContent = '로그인';
+      }
+    });
+  </script>
+</body>
+</html>
