@@ -213,6 +213,8 @@
         description:'에너지 넘치는 파도와 새로운 기술에 도전하는 걸 좋아하는 타입이에요.',
         district:'해운대구 · 송정 해수욕장', density:'혼잡', densityClass:'busy', densityNote:'주말 낮과 파도가 좋은 날에는 서핑 수요가 몰려 혼잡할 수 있어요.',
         destination:{name:'송정 해수욕장',lat:35.179,lng:129.201},
+        // 기상청 이안류 위험 예측은 '해운대 해수욕장'에만 제공됩니다. 송정은 해운대구에 있어도 별도 해변입니다.
+        officialRipForecast:false,
         kmaBeachUrl:'https://www.weather.go.kr/w/forecast/life/beach.do?groupCode=26%2F31%2F48',
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.184%2C35.173%2C129.211%2C35.188&layer=mapnik&marker=35.179%2C129.201',
         photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Songjeong%20Beach.jpg?width=1600', page:'https://commons.wikimedia.org/wiki/File:Songjeong_Beach.jpg', credit:'Andrewssi2 · CC BY-SA 3.0'},
@@ -234,6 +236,7 @@
         description:'반짝이는 야경과 노을을 보며 여유롭게 바다를 즐기는 타입이에요.',
         district:'수영구 · 광안리 해수욕장', density:'보통', densityClass:'normal', densityNote:'저녁과 주말에는 광안대교 야경을 보려는 방문객이 늘어날 수 있어요.',
         destination:{name:'광안리 해수욕장',lat:35.153,lng:129.118},
+        officialRipForecast:false,
         kmaBeachUrl:'https://www.weather.go.kr/special/CRP/beach/rpt_beach_306.html',
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.105%2C35.147%2C129.125%2C35.160&layer=mapnik&marker=35.153%2C129.118',
         photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Gwangalli%20Beach%20Busan%20(44835781985).jpg?width=1200', page:'https://commons.wikimedia.org/wiki/File:Gwangalli_Beach_Busan_(44835781985).jpg', credit:'bryan... · CC BY-SA 2.0'},
@@ -256,6 +259,7 @@
         description:'절경과 자연 해안선을 따라 바다를 깊이 느끼고 싶은 타입이에요.',
         district:'영도구 · 태종대', density:'한적', densityClass:'quiet', densityNote:'도심 해변보다 비교적 여유롭지만, 유람선 운항 시간대에는 방문객이 모일 수 있어요.',
         destination:{name:'태종대유원지',lat:35.0600,lng:129.0800},
+        officialRipForecast:false,
         kmaBeachUrl:'https://www.weather.go.kr/w/forecast/life/beach.do?groupCode=26%2F31%2F48',
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.070%2C35.048%2C129.094%2C35.068&layer=mapnik&marker=35.0600%2C129.0800',
         photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Lighthouse%20at%20Taejongdae%2C%20Busan.jpg?width=1600', page:'https://commons.wikimedia.org/wiki/File:Lighthouse_at_Taejongdae,_Busan.jpg', credit:'Seokjoon Choi · CC BY 2.0'},
@@ -277,6 +281,7 @@
         description:'조용한 해변에서 천천히 쉬며 바다의 시간을 즐기고 싶은 타입이에요.',
         district:'사하구 · 다대포 해수욕장', density:'한적', densityClass:'quiet', densityNote:'해변이 넓어 여유로운 편이에요. 다만 일몰과 낙조분수 시간에는 방문객이 늘어납니다.',
         destination:{name:'다대포 해수욕장',lat:35.04638172,lng:128.9625},
+        officialRipForecast:false,
         kmaBeachUrl:'https://www.weather.go.kr/special/CRP/beach/rpt_beach_308.html',
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=128.952%2C35.040%2C128.973%2C35.052&layer=mapnik&marker=35.04638172%2C128.9625',
         photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Sunset%20at%20Daedapo%20Beach.jpg?width=1600', page:'https://commons.wikimedia.org/wiki/File:Sunset_at_Daedapo_Beach.jpg', credit:'Heathercarreiro · CC BY-SA 4.0'},
@@ -334,13 +339,25 @@
       en:{login:'Sign in', title:'🌊 Find Your Perfect<br>Busan Sea Adventure', sport:'🏄 Activities', food:'🍽️ Food nearby', traffic:'🚌 Getting there', events:'🎉 Events', retry:'Take the test again'}
     };
 
-    function getSafetyCopy(language) {
+    // 기상청 공식 이안류 위험 예측은 부산에서 해운대 해수욕장만 제공합니다.
+    // 해운대구라는 행정구역이 같더라도 송정 해수욕장은 별도 예보 대상이므로 실시간 표를 표시하지 않습니다.
+    function getSafetyCopy(language, hasOfficialRipForecast) {
       const copies = {
-        ko:{title:'기상청 공식 이안류 위험 예측 · 해운대 해수욕장', detail:'아래 표는 기상청이 제공하는 실제 이안류 예측 화면입니다. 기상청 이안류 예측 대상은 부산에서는 해운대 해수욕장이므로, 송정·광안리·다대포·태종대의 위험도로 해석하면 안 됩니다.', frameTitle:'기상청 해운대 해수욕장 이안류 위험 예측', link:'기상청 해수욕장 예보 열기 ↗'},
-        'zh-TW':{title:'韓國氣象廳官方離岸流風險預測 · 海雲臺海水浴場', detail:'下方表格是韓國氣象廳提供的實際離岸流預測。釜山的預測對象為海雲臺海水浴場，請勿將其解讀為松亭、廣安里、多大浦或太宗臺的風險等級。', frameTitle:'韓國氣象廳海雲臺離岸流風險預測', link:'開啟韓國氣象廳海水浴場預報 ↗'},
-        'zh-CN':{title:'韩国气象厅官方离岸流风险预报 · 海云台海水浴场', detail:'下方表格是韩国气象厅提供的实际离岸流预报。釜山的预报对象为海云台海水浴场，请勿将其理解为松亭、广安里、多大浦或太宗台的风险等级。', frameTitle:'韩国气象厅海云台离岸流风险预报', link:'打开韩国气象厅海水浴场预报 ↗'},
-        ja:{title:'韓国気象庁公式 離岸流リスク予測 · 海雲台海水浴場', detail:'下の表は韓国気象庁が提供する実際の離岸流予測です。釜山での予測対象は海雲台海水浴場のため、松亭・広安里・多大浦・太宗台の危険度として解釈しないでください。', frameTitle:'韓国気象庁 海雲台海水浴場の離岸流リスク予測', link:'韓国気象庁の海水浴場予報を開く ↗'},
-        en:{title:'Official KMA rip-current forecast · Haeundae Beach', detail:'The table below is the live rip-current forecast provided by the Korea Meteorological Administration. In Busan, it applies to Haeundae Beach only; do not treat it as a risk level for Songjeong, Gwangalli, Dadaepo, or Taejongdae.', frameTitle:'KMA Haeundae Beach rip-current forecast', link:'Open KMA beach forecast ↗'}
+        ko: hasOfficialRipForecast
+          ? {title:'기상청 공식 이안류 위험 예측 · 해운대 해수욕장', detail:'아래 표는 기상청이 제공하는 실제 이안류 예측 화면입니다.', frameTitle:'기상청 해운대 해수욕장 이안류 위험 예측', link:'기상청 해수욕장 예보 열기 ↗'}
+          : {title:'이안류 안전 안내', detail:'이 장소는 기상청 공식 이안류 위험 예측 대상이 아닙니다. 부산의 공식 예측은 해운대 해수욕장에만 제공되므로, 다른 해변의 위험도를 임의로 표시하지 않습니다.', link:'기상청 해상·해수욕장 예보 열기 ↗'},
+        'zh-TW': hasOfficialRipForecast
+          ? {title:'韓國氣象廳官方離岸流風險預測 · 海雲臺海水浴場', detail:'下方表格是韓國氣象廳提供的實際離岸流預測。', frameTitle:'韓國氣象廳海雲臺離岸流風險預測', link:'開啟韓國氣象廳海水浴場預報 ↗'}
+          : {title:'離岸流安全資訊', detail:'此地點不是韓國氣象廳官方離岸流預測的對象。釜山僅提供海雲臺海水浴場的官方預測，因此不會任意顯示其他海灘的風險等級。', link:'開啟韓國氣象廳海上・海水浴場預報 ↗'},
+        'zh-CN': hasOfficialRipForecast
+          ? {title:'韩国气象厅官方离岸流风险预报 · 海云台海水浴场', detail:'下方表格是韩国气象厅提供的实际离岸流预报。', frameTitle:'韩国气象厅海云台离岸流风险预报', link:'打开韩国气象厅海水浴场预报 ↗'}
+          : {title:'离岸流安全信息', detail:'该地点不属于韩国气象厅官方离岸流风险预报对象。釜山仅提供海云台海水浴场的官方预报，因此不会随意显示其他海滩的风险等级。', link:'打开韩国气象厅海上・海水浴场预报 ↗'},
+        ja: hasOfficialRipForecast
+          ? {title:'韓国気象庁公式 離岸流リスク予測 · 海雲台海水浴場', detail:'下の表は韓国気象庁が提供する実際の離岸流予測です。', frameTitle:'韓国気象庁 海雲台海水浴場の離岸流リスク予測', link:'韓国気象庁の海水浴場予報を開く ↗'}
+          : {title:'離岸流の安全案内', detail:'この場所は韓国気象庁の公式離岸流予測の対象外です。釜山では海雲台海水浴場のみ公式予測が提供されるため、他の海岸の危険度は表示しません。', link:'韓国気象庁の海上・海水浴場予報を開く ↗'},
+        en: hasOfficialRipForecast
+          ? {title:'Official KMA rip-current forecast · Haeundae Beach', detail:'The chart below is the live rip-current forecast provided by the Korea Meteorological Administration.', frameTitle:'KMA Haeundae Beach rip-current forecast', link:'Open KMA beach forecast ↗'}
+          : {title:'Rip-current safety notice', detail:'This location is not covered by the official KMA rip-current forecast. In Busan, that forecast is available for Haeundae Beach only, so no risk level is invented for other beaches.', link:'Open KMA marine and beach forecast ↗'}
       };
       return copies[language] || copies.ko;
     }
@@ -426,9 +443,14 @@
       const aCount = answers.filter(answer => answer === 0).length;
       const resultIndex = aCount >= 7 ? 0 : aCount <= 3 ? 3 : answers[3] === 0 ? 1 : 2;
       const result = results[resultIndex];
-      const safetyCopy = getSafetyCopy($('#languageSelect').value);
+      const hasOfficialRipForecast = result.officialRipForecast === true;
+      const safetyCopy = getSafetyCopy($('#languageSelect').value, hasOfficialRipForecast);
       const kmaRipUrl = getKmaRipUrl($('#languageSelect').value);
       const ripLegend = getRipLegend($('#languageSelect').value);
+      const ripForecastContent = hasOfficialRipForecast
+        ? `<iframe class="kma-rip-frame" title="${safetyCopy.frameTitle}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${kmaRipUrl}"></iframe>
+           <p class="rip-legend"><b>ⓘ</b> ${ripLegend}</p>`
+        : `<p class="rip-legend"><b>ⓘ</b> 출발 전에는 당일 해상특보·파고·풍속과 현장 안전요원의 통제를 함께 확인하세요.</p>`;
       $('#quiz').hidden = true;
       $('#resultScreen').hidden = false;
       $('#resultCard').innerHTML = `<h2>${result.name}</h2><p>${result.description}</p><div class="route">${result.route.map((item, i) => `<div>${i + 1}. ${item}</div>`).join('')}</div>`;
@@ -444,8 +466,7 @@
         <section class="safety-card" aria-label="${safetyCopy.title}">
           <span class="safety-icon">⚠️</span>
           <div><strong>${safetyCopy.title}</strong><p>${safetyCopy.detail}</p>
-            <iframe class="kma-rip-frame" title="${safetyCopy.frameTitle}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${kmaRipUrl}"></iframe>
-            <p class="rip-legend"><b>ⓘ</b> ${ripLegend}</p>
+            ${ripForecastContent}
             <a href="${result.kmaBeachUrl}" target="_blank" rel="noopener noreferrer">${safetyCopy.link}</a>
           </div>
         </section>
