@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>나만의 부산 바다 레저 취향 찾기</title>
+  <title>밸런스부산해양관광</title>
   <style>
     :root { --blue:#087eb4; --aqua:#18c8c8; --navy:#063d60; --ink:#163548; --line:#dcebee; }
     * { box-sizing:border-box; }
@@ -56,6 +56,14 @@
     .weather-icon { display:grid; width:35px; height:35px; flex:0 0 35px; place-items:center; border-radius:50%; background:#dff8fb; font-size:21px; }
     .weather-card strong { display:block; color:#07567e; font-size:13px; }
     .weather-card p { margin:3px 0 0; color:#51727e; font-size:12px; }
+    .safety-card { display:flex; align-items:flex-start; gap:10px; margin:0 14px 14px; padding:12px; border:1px solid #f0d88e; border-radius:13px; background:#fffaf0; }
+    .safety-icon { display:grid; width:35px; height:35px; flex:0 0 35px; place-items:center; border-radius:50%; background:#fff0c7; font-size:19px; }
+    .safety-card strong { display:block; color:#7a5700; font-size:13px; }
+    .safety-card p { margin:3px 0 0; color:#6e6858; font-size:12px; line-height:1.5; }
+    .safety-card a { display:inline-block; margin-top:7px; color:#087eb4; font-size:11px; font-weight:800; text-decoration:none; }
+    .kma-rip-frame { display:block; width:100%; height:330px; margin-top:11px; border:1px solid #e8d797; border-radius:10px; background:#fff; }
+    .rip-legend { margin:9px 0 0; padding:9px; border-radius:9px; background:#fff; color:#665c45; font-size:11px; line-height:1.55; }
+    .rip-legend b { color:#7a5700; }
     .tabs { display:flex; gap:2px; overflow-x:auto; margin-top:20px; border-bottom:1px solid var(--line); -webkit-overflow-scrolling:touch; scrollbar-width:none; }
     .tabs::-webkit-scrollbar { display:none; }
     .tab { flex:1 0 auto; padding:11px 9px; border:0; border-bottom:3px solid transparent; background:#fff; color:#718491; font:inherit; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; }
@@ -63,6 +71,10 @@
     .panel { padding-top:15px; }
     .panel[hidden] { display:none; }
     .info { margin-bottom:9px; padding:13px; border:1px solid var(--line); border-radius:14px; font-size:13px; line-height:1.55; }
+    .food-card strong { display:block; color:var(--navy); font-size:14px; }
+    .food-card p { margin:4px 0 10px; color:#5e7884; font-size:12px; }
+    .food-map { display:block; width:100%; height:170px; border:0; border-radius:10px; background:#e8f0f2; }
+    .food-map-label { display:block; margin:0 0 7px; color:#08707c; font-size:11px; font-weight:800; }
     .event-meta { display:flex; align-items:center; justify-content:space-between; gap:8px; margin-bottom:7px; }
     .event-meta strong { color:var(--navy); font-size:14px; }
     .event-status { flex-shrink:0; padding:4px 7px; border-radius:99px; font-size:10px; font-weight:800; }
@@ -80,6 +92,10 @@
     .parking-status.busy { background:#fff0f0; color:#c52727; }
     .parking-status.normal { background:#fff8df; color:#9a6900; }
     .parking-status.quiet { background:#edf9f2; color:#16824c; }
+    .live-parking { margin-top:14px; padding:14px; border:1px solid #bfe9ec; border-radius:15px; background:linear-gradient(135deg,#efffff,#f6fbff); }
+    .live-parking strong { display:block; margin-bottom:5px; color:#07567e; font-size:14px; }
+    .live-parking p { margin:0; color:#51727e; font-size:12px; line-height:1.5; }
+    .live-parking-frame { display:block; width:100%; height:300px; margin-top:11px; border:1px solid #c9e9ee; border-radius:10px; background:#fff; }
     .directions { margin-top:14px; padding:15px; border:1px solid #bfe9ec; border-radius:15px; background:linear-gradient(135deg,#efffff,#f6fbff); }
     .directions strong { display:block; margin-bottom:5px; color:#07567e; font-size:14px; }
     .directions p { margin:0; color:#51727e; font-size:12px; line-height:1.5; }
@@ -117,7 +133,7 @@
 <body>
   <main class="app">
     <div class="topbar">
-      <p class="eyebrow">BUSAN SEA LEISURE</p>
+      <p class="eyebrow">BUSAN SEA APP</p>
       <div class="topbar-actions">
         <select id="languageSelect" class="language-select" aria-label="언어 선택">
           <option value="ko">한국어</option>
@@ -129,7 +145,7 @@
         <button id="accountButton" class="account-button" type="button">로그인</button>
       </div>
     </div>
-    <h1>🌊 나만의 부산 바다<br>레저 취향 찾기</h1>
+    <h1>🌊 밸런스<br>부산해양관광</h1>
 
     <section id="quiz">
       <p id="count" class="count"></p>
@@ -145,11 +161,13 @@
         <button class="tab active" data-tab="sport">🏄 레저 정보</button>
         <button class="tab" data-tab="food">🍽️ 추천 맛집</button>
         <button class="tab" data-tab="traffic">🚌 교통 안내</button>
+        <button class="tab" data-tab="fishing">🎣 낚시 안내</button>
         <button class="tab" data-tab="events">🎉 체험·축제</button>
       </nav>
       <div id="sport" class="panel"></div>
       <div id="food" class="panel" hidden></div>
       <div id="traffic" class="panel" hidden></div>
+      <div id="fishing" class="panel" hidden></div>
       <div id="events" class="panel" hidden></div>
       <button id="retry" class="retry">테스트 다시 하기</button>
     </section>
@@ -195,11 +213,12 @@
         description:'에너지 넘치는 파도와 새로운 기술에 도전하는 걸 좋아하는 타입이에요.',
         district:'해운대구 · 송정 해수욕장', density:'혼잡', densityClass:'busy', densityNote:'주말 낮과 파도가 좋은 날에는 서핑 수요가 몰려 혼잡할 수 있어요.',
         destination:{name:'송정 해수욕장',lat:35.179,lng:129.201},
+        kmaBeachUrl:'https://www.weather.go.kr/w/forecast/life/beach.do?groupCode=26%2F31%2F48',
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.184%2C35.173%2C129.211%2C35.188&layer=mapnik&marker=35.179%2C129.201',
         photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Songjeong%20Beach.jpg?width=1600', page:'https://commons.wikimedia.org/wiki/File:Songjeong_Beach.jpg', credit:'Andrewssi2 · CC BY-SA 3.0'},
         route:['송정 해수욕장 · 부산 해운대구 송정해변로 36','서프홀릭 부산송정본점','문토스트 본점'],
         sport:['서프홀릭 부산송정본점 · 부산 해운대구 송정해변로 50 · 송정해수욕장 권역 서핑 강습·장비 대여','입문자 패키지와 장비 대여를 이용할 수 있어요. 파도와 기상은 출발 전에 꼭 확인해 주세요.'],
-        food:['문토스트 본점 · 부산 해운대구 송정해변로 16 · 송정해수욕장 앞에서 들르기 좋은 모차렐라 치즈 토스트'],
+        food:[{name:'문토스트 본점', address:'부산 해운대구 송정해변로 16', detail:'송정해수욕장 앞에서 들르기 좋은 모차렐라 치즈 토스트', lat:35.1793, lng:129.2007}],
         events:[
           {title:'송정 서핑 체험', date:'상시 체험', detail:'파도와 기상에 따라 강습·대여 시간이 달라질 수 있습니다. 방문 전 운영처의 당일 공지를 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'Visit Busan 행사 일정'}
         ],
@@ -215,11 +234,12 @@
         description:'반짝이는 야경과 노을을 보며 여유롭게 바다를 즐기는 타입이에요.',
         district:'수영구 · 광안리 해수욕장', density:'보통', densityClass:'normal', densityNote:'저녁과 주말에는 광안대교 야경을 보려는 방문객이 늘어날 수 있어요.',
         destination:{name:'광안리 해수욕장',lat:35.153,lng:129.118},
+        kmaBeachUrl:'https://www.weather.go.kr/special/CRP/beach/rpt_beach_306.html',
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.105%2C35.147%2C129.125%2C35.160&layer=mapnik&marker=35.153%2C129.118',
         photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Gwangalli%20Beach%20Busan%20(44835781985).jpg?width=1200', page:'https://commons.wikimedia.org/wiki/File:Gwangalli_Beach_Busan_(44835781985).jpg', credit:'bryan... · CC BY-SA 2.0'},
         route:['광안리 해수욕장 & 수영만 요트경기장','크레이지서퍼스 → 요트탈래 부산본점','에쏘 에스프레소바'],
         sport:['크레이지서퍼스 · 부산 수영구 광남로48번길 29 1층 · 광안리 SUP·서핑 체험','요트탈래 부산본점 · 부산 해운대구 해운대해변로 84 수영만요트경기장 본관 102호 · 선셋 시간대는 미리 예약해 주세요.'],
-        food:['에쏘 에스프레소바 · 부산 수영구 광안해변로 207 · 광안리 해변 산책 중 들르기 좋은 에스프레소 바'],
+        food:[{name:'에쏘 에스프레소바', address:'부산 수영구 광안해변로 207', detail:'광안리 해변 산책 중 들르기 좋은 에스프레소 바', lat:35.1532, lng:129.1201}],
         events:[
           {title:'광안리 M 드론라이트쇼', start:'2026-08-08', end:'2026-08-29', detail:'광안대교를 배경으로 진행되는 드론 공연 일정입니다. 공연 시간·기상 취소 여부는 공식 행사 일정을 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'Visit Busan 공식 일정'},
           {title:'수영만 요트 체험', date:'상시 체험', detail:'선셋 시간대는 예약 수요가 높습니다. 출항 여부와 탑승 가능 시간은 운영처에서 당일 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'체험 일정 확인'}
@@ -235,12 +255,13 @@
         name:'🌊 자연 감성 오션 어드벤처',
         description:'절경과 자연 해안선을 따라 바다를 깊이 느끼고 싶은 타입이에요.',
         district:'영도구 · 태종대', density:'한적', densityClass:'quiet', densityNote:'도심 해변보다 비교적 여유롭지만, 유람선 운항 시간대에는 방문객이 모일 수 있어요.',
-        destination:{name:'태종대',lat:35.052,lng:129.073},
-        mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.061%2C35.044%2C129.083%2C35.060&layer=mapnik&marker=35.052%2C129.073',
+        destination:{name:'태종대유원지',lat:35.0600,lng:129.0800},
+        kmaBeachUrl:'https://www.weather.go.kr/w/forecast/life/beach.do?groupCode=26%2F31%2F48',
+        mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.070%2C35.048%2C129.094%2C35.068&layer=mapnik&marker=35.0600%2C129.0800',
         photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Lighthouse%20at%20Taejongdae%2C%20Busan.jpg?width=1600', page:'https://commons.wikimedia.org/wiki/File:Lighthouse_at_Taejongdae,_Busan.jpg', credit:'Seokjoon Choi · CC BY 2.0'},
         route:['영도 태종대 & 감지해변','태종대곤포유람선','1번해녀집'],
         sport:['태종대곤포유람선 · 부산 영도구 전망로 24 태종대유원지 내 · 해안 절벽과 오륙도 풍경을 둘러볼 수 있어요.','해안 산책에는 편한 신발과 바람막이를 챙기는 것을 추천해요.'],
-        food:['1번해녀집 · 부산 영도구 감지해변길 81 · 감지해변 바로 앞 조개구이·해물라면'],
+        food:[{name:'1번해녀집', address:'부산 영도구 감지해변길 81', detail:'감지해변 바로 앞 조개구이·해물라면', lat:35.0502, lng:129.0858}],
         events:[
           {title:'태종대 해안 유람선 체험', date:'상시 체험', detail:'파고·기상과 선박 점검에 따라 운항이 바뀔 수 있습니다. 출발 전 당일 운항 여부를 꼭 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'Visit Busan 행사 일정'}
         ],
@@ -255,12 +276,13 @@
         name:'🏖️ 여유로운 해변 힐링러',
         description:'조용한 해변에서 천천히 쉬며 바다의 시간을 즐기고 싶은 타입이에요.',
         district:'사하구 · 다대포 해수욕장', density:'한적', densityClass:'quiet', densityNote:'해변이 넓어 여유로운 편이에요. 다만 일몰과 낙조분수 시간에는 방문객이 늘어납니다.',
-        destination:{name:'다대포 해수욕장',lat:35.052,lng:128.972},
-        mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=128.960%2C35.041%2C128.984%2C35.060&layer=mapnik&marker=35.052%2C128.972',
+        destination:{name:'다대포 해수욕장',lat:35.04638172,lng:128.9625},
+        kmaBeachUrl:'https://www.weather.go.kr/special/CRP/beach/rpt_beach_308.html',
+        mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=128.952%2C35.040%2C128.973%2C35.052&layer=mapnik&marker=35.04638172%2C128.9625',
         photo:{src:'https://commons.wikimedia.org/wiki/Special:FilePath/Sunset%20at%20Daedapo%20Beach.jpg?width=1600', page:'https://commons.wikimedia.org/wiki/File:Sunset_at_Daedapo_Beach.jpg', credit:'Heathercarreiro · CC BY-SA 4.0'},
         route:['다대포 해수욕장 & 생태탐방로','다대포해양레포츠센터','다대포 할매집 → 다대포 낙조분수'],
         sport:['다대포해양레포츠센터 · 부산 사하구 몰운대1길 52 · 카이트보딩·SUP·서핑 등 해양레포츠 프로그램','일몰과 낙조분수 운영 시간은 방문 전에 확인해 주세요. 프로그램 운영 여부와 예약 방법은 출발 전에 확인해 주세요.'],
-        food:['다대포 할매집 · 부산 사하구 몰운대1길 55 1층 · 다대포해수욕장역에서 도보 약 7분, 해물파전과 문어삼합'],
+        food:[{name:'다대포 할매집', address:'부산 사하구 몰운대1길 55 1층', detail:'다대포해수욕장역에서 도보 약 7분, 해물파전과 문어삼합', lat:35.0467, lng:128.9674}],
         events:[
           {title:'제30회 부산바다축제', start:'2026-08-07', end:'2026-08-13', detail:'다대포를 포함한 부산 해변 일대에서 열리는 여름 해양 축제입니다. 세부 프로그램·장소·우천 변동은 공식 일정에서 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'Visit Busan 공식 일정'},
           {title:'다대포 해양레저 체험', date:'상시 체험', detail:'기상과 수상 안전 조건에 따라 프로그램이 달라질 수 있습니다. 장비 체험 전 운영 여부를 확인해 주세요.', href:'https://www.visitbusan.net/schedule/list.do?boardId=BBS_0000009&menuCd=DOM_000000204012000000', source:'체험 일정 확인'}
@@ -274,21 +296,76 @@
       }
     ];
 
+    // 2026년 기준 공식 규정은 수시로 바뀔 수 있으므로, 앱에 임의의 금어기·체장 수치를 고정하지 않습니다.
+    const fishingGuide = [
+      {
+        title:'📜 금어기·금지체장 확인',
+        detail:'잡은 어종을 보관하기 전에 금어기, 금지체장, 포획·채취 금지구역·수심을 반드시 확인하세요. 기준은 어종·해역에 따라 다르고 개정될 수 있습니다.',
+        link:'https://www.mof.go.kr/doc/ko/selectDocList.do?bbsSeq=22&currentPageNo=1&menuSeq=1009&pagecnt=10&recordCountPerPage=&searchSelect=title&searchValue=%EA%B8%88%EC%96%B4%EA%B8%B0',
+        linkText:'해양수산부 2026 금어기·금지체장 기준 보기 ↗'
+      },
+      {
+        title:'📏 측정 후 방생',
+        detail:'금지체장 미달 개체나 금어기 대상 어종은 즉시 방생하세요. 어종별 체장 측정 기준도 달라질 수 있으므로, 출조 전 공식 기준표와 계측도를 확인하세요.',
+        link:'https://www.mof.go.kr/doc/ko/selectDoc.do?bbsSeq=22&docSeq=59501&menuSeq=1013',
+        linkText:'그림으로 보는 수산자원 보호기준 ↗'
+      },
+      {
+        title:'🛟 해변·항만 안전 수칙',
+        detail:'해수욕장 관리구역, 방파제·테트라포드, 항만시설은 현장 통제와 기상특보를 우선합니다. 파도·너울 예보와 출입 통제 표지를 확인한 뒤 안전한 장소에서 낚시하세요.',
+        link:'https://www.weather.go.kr/w/forecast/ocean.do',
+        linkText:'기상청 해상 예보·특보 확인 ↗'
+      }
+    ];
+
     let index = 0;
     let answers = [];
     const $ = selector => document.querySelector(selector);
+    // 좌표를 임의로 추정하지 않고, 상호명과 도로명 주소를 지도 검색에 함께 전달합니다.
+    // 따라서 맛집 핀은 해당 매장의 실제 검색 결과를 중심으로 표시됩니다.
+    function createRestaurantMapUrl(place) {
+      return `https://www.google.com/maps?q=${encodeURIComponent(`${place.name}, ${place.address}`)}&output=embed`;
+    }
     const languageLabels = {
-      ko:{login:'로그인', title:'🌊 나만의 부산 바다<br>레저 취향 찾기', sport:'🏄 레저 정보', food:'🍽️ 추천 맛집', traffic:'🚌 교통 안내', events:'🎉 체험·축제', retry:'테스트 다시 하기'},
+      ko:{login:'로그인', title:'🌊 밸런스<br>부산해양관광', sport:'🏄 레저 정보', food:'🍽️ 추천 맛집', traffic:'🚌 교통 안내', events:'🎉 체험·축제', retry:'테스트 다시 하기'},
       'zh-TW':{login:'登入', title:'🌊 找到專屬你的釜山海洋<br>休閒偏好', sport:'🏄 休閒資訊', food:'🍽️ 推薦美食', traffic:'🚌 交通資訊', events:'🎉 體驗・節慶', retry:'重新測驗'},
       'zh-CN':{login:'登录', title:'🌊 找到专属你的釜山海洋<br>休闲偏好', sport:'🏄 休闲信息', food:'🍽️ 推荐美食', traffic:'🚌 交通信息', events:'🎉 体验・庆典', retry:'重新测试'},
       ja:{login:'ログイン', title:'🌊 自分だけの釜山の海<br>レジャータイプ診断', sport:'🏄 レジャー情報', food:'🍽️ おすすめグルメ', traffic:'🚌 交通案内', events:'🎉 体験・祭り', retry:'もう一度診断'},
       en:{login:'Sign in', title:'🌊 Find Your Perfect<br>Busan Sea Adventure', sport:'🏄 Activities', food:'🍽️ Food nearby', traffic:'🚌 Getting there', events:'🎉 Events', retry:'Take the test again'}
     };
 
+    function getSafetyCopy(language) {
+      const copies = {
+        ko:{title:'기상청 공식 이안류 위험 예측 · 해운대 해수욕장', detail:'아래 표는 기상청이 제공하는 실제 이안류 예측 화면입니다. 기상청 이안류 예측 대상은 부산에서는 해운대 해수욕장이므로, 송정·광안리·다대포·태종대의 위험도로 해석하면 안 됩니다.', frameTitle:'기상청 해운대 해수욕장 이안류 위험 예측', link:'기상청 해수욕장 예보 열기 ↗'},
+        'zh-TW':{title:'韓國氣象廳官方離岸流風險預測 · 海雲臺海水浴場', detail:'下方表格是韓國氣象廳提供的實際離岸流預測。釜山的預測對象為海雲臺海水浴場，請勿將其解讀為松亭、廣安里、多大浦或太宗臺的風險等級。', frameTitle:'韓國氣象廳海雲臺離岸流風險預測', link:'開啟韓國氣象廳海水浴場預報 ↗'},
+        'zh-CN':{title:'韩国气象厅官方离岸流风险预报 · 海云台海水浴场', detail:'下方表格是韩国气象厅提供的实际离岸流预报。釜山的预报对象为海云台海水浴场，请勿将其理解为松亭、广安里、多大浦或太宗台的风险等级。', frameTitle:'韩国气象厅海云台离岸流风险预报', link:'打开韩国气象厅海水浴场预报 ↗'},
+        ja:{title:'韓国気象庁公式 離岸流リスク予測 · 海雲台海水浴場', detail:'下の表は韓国気象庁が提供する実際の離岸流予測です。釜山での予測対象は海雲台海水浴場のため、松亭・広安里・多大浦・太宗台の危険度として解釈しないでください。', frameTitle:'韓国気象庁 海雲台海水浴場の離岸流リスク予測', link:'韓国気象庁の海水浴場予報を開く ↗'},
+        en:{title:'Official KMA rip-current forecast · Haeundae Beach', detail:'The table below is the live rip-current forecast provided by the Korea Meteorological Administration. In Busan, it applies to Haeundae Beach only; do not treat it as a risk level for Songjeong, Gwangalli, Dadaepo, or Taejongdae.', frameTitle:'KMA Haeundae Beach rip-current forecast', link:'Open KMA beach forecast ↗'}
+      };
+      return copies[language] || copies.ko;
+    }
+
+    // 기상청 원본은 외부 문서이므로, 표 자체는 정부 원문으로 유지합니다.
+    // 외부 번역 서비스의 지역 제한을 피하기 위해 앱에서 위험 단계 해석을 제공합니다.
+    function getKmaRipUrl(language) {
+      return 'https://www.weather.go.kr/w/forecast/ocean/ripcurrent.do';
+    }
+
+    function getRipLegend(language) {
+      const legends = {
+        ko:'표 읽기: 관심(발생 가능성 낮음) · 주의(가능성 있음) · 경계(가능성 높음) · 위험(발생 가능성 매우 높음). 오늘·내일·모레 시간대별 행을 확인하세요.',
+        'zh-TW':'圖表說明：關心（可能性低）· 注意（可能發生）· 警戒（可能性高）· 危險（可能性非常高）。請查看今天、明天和後天的逐小時欄位。',
+        'zh-CN':'图表说明：关注（可能性低）· 注意（可能发生）· 警戒（可能性高）· 危险（可能性非常高）。请查看今天、明天和后天的逐小时栏目。',
+        ja:'表の見方：関心（発生可能性が低い）・注意（発生する可能性あり）・警戒（発生可能性が高い）・危険（発生可能性が非常に高い）。今日・明日・明後日の時間帯を確認してください。',
+        en:'How to read the chart: Attention (low likelihood) · Advisory (possible) · Caution (high likelihood) · Danger (very high likelihood). Check the hourly rows for today, tomorrow, and the day after tomorrow.'
+      };
+      return legends[language] || legends.ko;
+    }
+
     function applyLanguage(language) {
       const labels = languageLabels[language] || languageLabels.ko;
       document.documentElement.lang = language;
-      document.title = language === 'en' ? 'Find Your Busan Sea Adventure' : '나만의 부산 바다 레저 취향 찾기';
+      document.title = language === 'en' ? 'Balance Busan Marine Tourism' : '밸런스부산해양관광';
       $('#accountButton').textContent = labels.login;
       document.querySelector('h1').innerHTML = labels.title;
       document.querySelector('[data-tab="sport"]').textContent = labels.sport;
@@ -297,6 +374,7 @@
       document.querySelector('[data-tab="events"]').textContent = labels.events;
       $('#retry').textContent = labels.retry;
       localStorage.setItem('busanSeaLanguage', language);
+      if (!$('#resultScreen').hidden && answers.length === questions.length) renderResult();
     }
 
     const savedLanguage = localStorage.getItem('busanSeaLanguage') || 'ko';
@@ -310,6 +388,13 @@
         translateSelect.value = language;
         translateSelect.dispatchEvent(new Event('change'));
       } else if (language === 'ko') {
+        // Google 번역을 원문으로 되돌릴 때 새로고침이 필요하지만, 테스트 결과와 선택 탭은 보존합니다.
+        sessionStorage.setItem('busanSeaViewState', JSON.stringify({
+          answers,
+          index,
+          showingResult: !$('#resultScreen').hidden,
+          activeTab: document.querySelector('.tab.active')?.dataset.tab || 'sport'
+        }));
         document.cookie = 'googtrans=/ko/ko;path=/';
         window.location.reload();
       }
@@ -341,6 +426,9 @@
       const aCount = answers.filter(answer => answer === 0).length;
       const resultIndex = aCount >= 7 ? 0 : aCount <= 3 ? 3 : answers[3] === 0 ? 1 : 2;
       const result = results[resultIndex];
+      const safetyCopy = getSafetyCopy($('#languageSelect').value);
+      const kmaRipUrl = getKmaRipUrl($('#languageSelect').value);
+      const ripLegend = getRipLegend($('#languageSelect').value);
       $('#quiz').hidden = true;
       $('#resultScreen').hidden = false;
       $('#resultCard').innerHTML = `<h2>${result.name}</h2><p>${result.description}</p><div class="route">${result.route.map((item, i) => `<div>${i + 1}. ${item}</div>`).join('')}</div>`;
@@ -353,6 +441,14 @@
           <span class="density ${result.densityClass}">● 예상 혼잡도 ${result.density}</span>
         </div>
         <iframe class="map-frame" title="${result.district} 지도" src="${result.mapUrl}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <section class="safety-card" aria-label="${safetyCopy.title}">
+          <span class="safety-icon">⚠️</span>
+          <div><strong>${safetyCopy.title}</strong><p>${safetyCopy.detail}</p>
+            <iframe class="kma-rip-frame" title="${safetyCopy.frameTitle}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${kmaRipUrl}"></iframe>
+            <p class="rip-legend"><b>ⓘ</b> ${ripLegend}</p>
+            <a href="${result.kmaBeachUrl}" target="_blank" rel="noopener noreferrer">${safetyCopy.link}</a>
+          </div>
+        </section>
         <div id="weather" class="weather-card" aria-live="polite"><span class="weather-icon">⏳</span><div><strong>${result.destination.name} 현재 날씨</strong><p>날씨 정보를 불러오는 중입니다.</p></div></div>
         <p class="map-note">${result.densityNote} 예상 혼잡도는 실시간 방문자 수가 아닌 코스 선택용 안내 지표입니다.</p>
         <section class="congestion-guide" aria-label="예상 혼잡도 판단 기준">
@@ -365,14 +461,27 @@
           </ul>
         </section>`;
       loadWeather(result.destination);
-      ['sport','food'].forEach(key => {
-        const buttonLabel = key === 'sport' ? '레저 예약 신청' : key === 'food' ? '맛집 예약·웨이팅 신청' : '';
-        $(`#${key}`).innerHTML = result[key].map(item => `<article class="info">${item}${buttonLabel ? `<button class="reserve" data-place="${item.replace(/"/g, '&quot;')}">${buttonLabel}</button>` : ''}</article>`).join('');
-      });
+      $('#sport').innerHTML = result.sport.map(item => {
+        const placeName = item.split(' · ')[0];
+        return `<article class="info">${item}<button class="reserve" data-place="${placeName.replace(/"/g, '&quot;')}">Google 지도에서 예약·문의</button></article>`;
+      }).join('');
+      $('#food').innerHTML = result.food.map(place => `<article class="info food-card">
+        <strong>🍽️ ${place.name}</strong>
+        <p>${place.address}<br>${place.detail}</p>
+        <span class="food-map-label">📍 맛집 위치</span>
+        <iframe class="food-map" title="${place.name} 위치 지도" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="${createRestaurantMapUrl(place)}"></iframe>
+        <button class="reserve" data-place="${place.name.replace(/"/g, '&quot;')}">Google 지도에서 예약·문의</button>
+      </article>`).join('');
       $('#traffic').innerHTML = `
         ${result.traffic.map(item => `<article class="info">${item}</article>`).join('')}
-        <h3 class="parking-title">🅿️ 주변 주차장</h3>
-        ${result.parking.map(parking => `<article class="info parking"><div><strong>${parking.name}</strong><p>${parking.detail}</p></div><span class="parking-status ${parking.className}">예상 ${parking.status}</span></article>`).join('')}
+        <h3 class="parking-title">🅿️ 주변 주차장 위치 안내</h3>
+        ${result.parking.map(parking => `<article class="info parking"><div><strong>${parking.name}</strong><p>${parking.detail}</p></div><span class="parking-status normal">현장 확인</span></article>`).join('')}
+        <section class="live-parking" aria-label="부산 공영주차장 실시간 현황">
+          <strong>실시간 공영주차장 현황 · 부산시설공단</strong>
+          <p>아래 화면은 부산시설공단이 제공하는 실제 주차 가능 현황입니다. 시설공단 관리 대상 주차장에 한해 표시되며, 입차 직전 다시 확인하세요.</p>
+          <iframe class="live-parking-frame" title="부산시설공단 실시간 주차현황" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://bsparking.bisco.or.kr/realtimeparking"></iframe>
+          <a class="directions-button" href="https://bsparking.bisco.or.kr/realtimeparking" target="_blank" rel="noopener noreferrer">실시간 주차현황 전체 화면 열기 ↗</a>
+        </section>
         <section class="directions">
           <strong>🚲 공용 자전거·대여 시설</strong>
           <p><b>${result.bike.name}</b><br>${result.bike.detail}</p>
@@ -384,7 +493,12 @@
           <button class="directions-button" type="button" data-destination-lat="${result.destination.lat}" data-destination-lng="${result.destination.lng}" data-destination-name="${result.destination.name}">현재 위치에서 ${result.destination.name} 가기</button>
           <p class="directions-status" aria-live="polite">위치 정보는 길찾기 링크 생성에만 사용되며 저장하지 않습니다.</p>
         </section>
-        <p class="map-note">주차 혼잡도는 실시간 정보가 아닌 방문 시간대 기준의 예상 안내입니다. 출발 전 주차장 운영 정보와 빈자리 여부를 확인해 주세요.</p>`;
+        <p class="map-note">주변 주차장 카드는 위치 안내이며, 실제 잔여면·운영 여부는 위 부산시설공단 실시간 현황과 현장 표지를 기준으로 확인하세요.</p>`;
+      $('#fishing').innerHTML = fishingGuide.map(item => `<article class="info">
+        <strong>${item.title}</strong>
+        <p class="event-detail">${item.detail}</p>
+        <a class="event-link" href="${item.link}" target="_blank" rel="noopener noreferrer">${item.linkText}</a>
+      </article>`).join('') + `<p class="map-note">낚시 규정은 법령·고시와 지역 관리계획에 따라 달라질 수 있습니다. 이 탭은 출조 전 확인을 돕는 안내이며, 현장 표지와 관계기관 안내가 우선입니다.</p>`;
       $('#events').innerHTML = result.events.map(eventInfo => {
         const state = getEventState(eventInfo);
         return `<article class="info">
@@ -448,7 +562,7 @@
       const button = event.target.closest('.tab');
       if (!button) return;
       document.querySelectorAll('.tab').forEach(tab => tab.classList.toggle('active', tab === button));
-      ['sport','food','traffic','events'].forEach(key => { $(`#${key}`).hidden = key !== button.dataset.tab; });
+      ['sport','food','traffic','fishing','events'].forEach(key => { $(`#${key}`).hidden = key !== button.dataset.tab; });
     });
 
     // 예약 양식은 테스트 결과에서 특정 업체를 선택했을 때만 생성됩니다.
@@ -491,7 +605,57 @@
       }, { enableHighAccuracy:true, timeout:10000, maximumAge:60000 });
     }
 
-    function openBooking(place, actionLabel) {
+    // 예약 확정은 각 업체의 공식 채널에서만 이뤄집니다. 이 앱은 예약 내용을 정리해 해당 채널로 연결합니다.
+    const bookingChannels = {
+      '서프홀릭 부산송정본점': {url:'https://surfholic.co.kr/', label:'서프홀릭 공식 예약·문의'},
+      '에쏘 에스프레소바': {url:'https://www.tabling.co.kr/place/677cd20366de5f069888f312', label:'에쏘 예약·문의'}
+    };
+
+    function getBookingChannel(place) {
+      return bookingChannels[place] || {
+        url:`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place} 부산`)}`,
+        label:'업체 지도에서 예약·문의'
+      };
+    }
+
+    async function openRealReservation(place, actionLabel) {
+      const channel = getBookingChannel(place);
+      const modal = document.createElement('div');
+      modal.className = 'modal-backdrop';
+      modal.setAttribute('role', 'dialog');
+      modal.setAttribute('aria-modal', 'true');
+      modal.innerHTML = `
+        <form class="modal">
+          <h2>${actionLabel}</h2>
+          <p><b>${place}</b><br>입력한 정보는 이 기기에만 사용되며 저장되지 않습니다. 다음 단계에서 업체의 실제 예약·문의 화면으로 이동합니다.</p>
+          <div class="form-grid">
+            <label>방문 날짜 <input name="date" type="date" min="${new Date().toISOString().slice(0, 10)}" required></label>
+            <label>희망 시간 <select name="time"><option>오전 10:00</option><option>오후 1:00</option><option>오후 4:00</option><option>오후 7:00</option></select></label>
+            <label>인원 <select name="people"><option>1명</option><option>2명</option><option>3명</option><option>4명 이상</option></select></label>
+            <label>예약자 이름 <input name="name" type="text" placeholder="예약자 이름" required></label>
+          </div>
+          <div class="modal-actions"><button type="button" class="cancel">취소</button><button type="submit" class="submit">실제 예약·문의 화면 열기</button></div>
+        </form>`;
+      document.body.append(modal);
+      modal.querySelector('[name="name"]').focus();
+      modal.querySelector('.cancel').addEventListener('click', () => modal.remove());
+      modal.addEventListener('click', event => { if (event.target === modal) modal.remove(); });
+      modal.querySelector('form').addEventListener('submit', async event => {
+        event.preventDefault();
+        const form = event.currentTarget;
+        const requestText = `[부산 바다 레저 앱 예약 문의]\n${place}\n${form.elements.date.value} ${form.elements.time.value} · ${form.elements.people.value}\n예약자: ${form.elements.name.value.trim()}`;
+        try { await navigator.clipboard.writeText(requestText); } catch (error) { /* 브라우저 권한에 따라 복사가 제한될 수 있습니다. */ }
+        window.open(channel.url, '_blank', 'noopener');
+        form.innerHTML = `<h2>업체 예약·문의 화면을 열었습니다</h2><p>예약 요청 문구를 클립보드에 복사했습니다. 새 탭에서 업체의 예약 가능 여부와 최종 조건을 확인해 주세요.</p><div class="modal-actions"><button type="button" class="submit">닫기</button></div>`;
+        form.querySelector('.submit').addEventListener('click', () => modal.remove());
+      });
+    }
+
+    function openBooking(place) {
+      // 예약 기능을 이 앱에서 흉내 내지 않고, 실제 업체의 Google 지도 예약·문의 화면으로 바로 이동합니다.
+      const googlePlaceUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${place} 부산`)}`;
+      window.open(googlePlaceUrl, '_blank', 'noopener');
+      return;
       const modal = document.createElement('div');
       modal.className = 'modal-backdrop';
       modal.setAttribute('role', 'dialog');
@@ -529,7 +693,24 @@
       renderQuestion();
     });
 
-    renderQuestion();
+    function restoreViewState() {
+      try {
+        const saved = JSON.parse(sessionStorage.getItem('busanSeaViewState') || 'null');
+        sessionStorage.removeItem('busanSeaViewState');
+        if (saved?.showingResult && Array.isArray(saved.answers) && saved.answers.length === questions.length) {
+          answers = saved.answers;
+          index = questions.length;
+          renderResult();
+          document.querySelector(`[data-tab="${saved.activeTab}"]`)?.click();
+          return;
+        }
+      } catch (error) {
+        sessionStorage.removeItem('busanSeaViewState');
+      }
+      renderQuestion();
+    }
+
+    restoreViewState();
   </script>
   <script>
     window.googleTranslateElementInit = function () {
