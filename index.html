@@ -11,6 +11,9 @@
     .app { max-width:480px; min-height:100vh; margin:auto; padding:24px 20px 32px; background:#fff; box-shadow:0 0 35px #164c6530; }
     .eyebrow { margin:0; color:var(--blue); font-size:11px; font-weight:800; letter-spacing:.1em; }
     .topbar { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+    .topbar-actions { display:flex; align-items:center; gap:7px; flex-shrink:0; }
+    .language-select { max-width:112px; min-height:34px; padding:7px 25px 7px 10px; border:1px solid #b9e5e7; border-radius:999px; background:#f1ffff; color:#08707c; font:inherit; font-size:12px; font-weight:800; cursor:pointer; }
+    #google_translate_element { display:none; }
     .account-button { flex-shrink:0; min-height:34px; padding:8px 11px; border:1px solid #b9e5e7; border-radius:999px; background:#f1ffff; color:#08707c; font:inherit; font-size:12px; font-weight:800; cursor:pointer; }
     h1 { margin:8px 0 20px; font-size:25px; line-height:1.35; }
     .count { margin:0 0 8px; color:var(--blue); font-size:13px; font-weight:800; }
@@ -37,6 +40,13 @@
     .density.quiet { background:#edf9f2; color:#16824c; }
     .map-frame { display:block; width:100%; height:210px; border:0; background:#e8f0f2; }
     .map-note { margin:0; padding:10px 14px 13px; color:#607a86; font-size:11px; line-height:1.5; }
+    .congestion-guide { margin:0 14px 14px; padding:12px; border-radius:12px; background:#f7fafb; color:#58717d; font-size:11px; line-height:1.55; }
+    .congestion-guide strong { display:block; margin-bottom:5px; color:#335c6d; font-size:12px; }
+    .congestion-guide ul { margin:0; padding-left:17px; }
+    .weather-card { display:flex; align-items:center; gap:10px; margin:14px; padding:12px; border:1px solid #c9e9ee; border-radius:13px; background:#f2fcff; }
+    .weather-icon { display:grid; width:35px; height:35px; flex:0 0 35px; place-items:center; border-radius:50%; background:#dff8fb; font-size:21px; }
+    .weather-card strong { display:block; color:#07567e; font-size:13px; }
+    .weather-card p { margin:3px 0 0; color:#51727e; font-size:12px; }
     .tabs { display:flex; margin-top:20px; border-bottom:1px solid var(--line); }
     .tab { flex:1; padding:11px 2px; border:0; border-bottom:3px solid transparent; background:#fff; color:#718491; font:inherit; font-size:12px; font-weight:700; cursor:pointer; white-space:nowrap; }
     .tab.active { border-color:var(--aqua); color:var(--blue); }
@@ -88,7 +98,16 @@
   <main class="app">
     <div class="topbar">
       <p class="eyebrow">BUSAN SEA LEISURE</p>
-      <button id="accountButton" class="account-button" type="button">로그인</button>
+      <div class="topbar-actions">
+        <select id="languageSelect" class="language-select" aria-label="언어 선택">
+          <option value="ko">한국어</option>
+          <option value="zh-TW">繁體中文（台灣）</option>
+          <option value="zh-CN">简体中文</option>
+          <option value="ja">日本語</option>
+          <option value="en">English</option>
+        </select>
+        <button id="accountButton" class="account-button" type="button">로그인</button>
+      </div>
     </div>
     <h1>🌊 나만의 부산 바다<br>레저 취향 찾기</h1>
 
@@ -112,6 +131,7 @@
       <button id="retry" class="retry">테스트 다시 하기</button>
     </section>
   </main>
+  <div id="google_translate_element" aria-hidden="true"></div>
 
   <div id="authModal" class="auth-backdrop" hidden>
     <section class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
@@ -153,9 +173,9 @@
         district:'해운대구 · 송정 해수욕장', density:'혼잡', densityClass:'busy', densityNote:'주말 낮과 파도가 좋은 날에는 서핑 수요가 몰려 혼잡할 수 있어요.',
         destination:{name:'송정 해수욕장',lat:35.179,lng:129.201},
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.184%2C35.173%2C129.211%2C35.188&layer=mapnik&marker=35.179%2C129.201',
-        route:['송정 해수욕장 · 부산 해운대구 송정해변로 36','서프홀릭 송정본점','료미 송정점 → 문토스트 본점'],
-        sport:['서프홀릭 송정본점 · 부산 해운대구 송정구길 47 1층','입문자 패키지와 장비 대여를 이용할 수 있어요. 파도와 기상은 출발 전에 꼭 확인해 주세요.'],
-        food:['료미 송정점 · 부산 해운대구 송정광정로 87 1층 · 오션뷰 퓨전 일식','문토스트 본점 · 부산 해운대구 송정해변로 16 · 서핑 뒤에 먹기 좋은 치즈 토스트'],
+        route:['송정 해수욕장 · 부산 해운대구 송정해변로 36','서프홀릭 부산송정본점','문토스트 본점'],
+        sport:['서프홀릭 부산송정본점 · 부산 해운대구 송정해변로 50 · 송정해수욕장 권역 서핑 강습·장비 대여','입문자 패키지와 장비 대여를 이용할 수 있어요. 파도와 기상은 출발 전에 꼭 확인해 주세요.'],
+        food:['문토스트 본점 · 부산 해운대구 송정해변로 16 · 송정해수욕장 앞에서 들르기 좋은 모차렐라 치즈 토스트'],
         traffic:['동해선 송정역 2번 출구에서 도보 약 10분','185번 버스 이용 후 송정해수욕장 입구 정류장에서 하차'],
         parking:[
           {name:'송정해수욕장 공영주차장', detail:'해변 인근 · 주말 낮에는 일찍 만차가 될 수 있어요.', status:'혼잡', className:'busy'},
@@ -168,9 +188,9 @@
         district:'수영구 · 광안리 해수욕장', density:'보통', densityClass:'normal', densityNote:'저녁과 주말에는 광안대교 야경을 보려는 방문객이 늘어날 수 있어요.',
         destination:{name:'광안리 해수욕장',lat:35.153,lng:129.118},
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.105%2C35.147%2C129.125%2C35.160&layer=mapnik&marker=35.153%2C129.118',
-        route:['광안리 해수욕장 & 수영만 요트경기장','크레이지서프 광안리 → 요트탈래 부산본점','톤쇼우 광안점 → Clam 광안리점'],
-        sport:['크레이지서프 광안리 · 부산 수영구 광안해변로54번길 3 · 광안대교를 보며 SUP 체험','요트탈래 부산본점 · 부산 해운대구 해운대해변로 84 수영만요트경기장 · 선셋 시간대는 미리 예약해 주세요.'],
-        food:['톤쇼우 광안점 · 부산 수영구 광안해변로279번길 13 · 프리미엄 돈카츠','Clam 광안리점 · 부산 수영구 광안해변로 225 · 타파스와 와인을 즐길 수 있어요.'],
+        route:['광안리 해수욕장 & 수영만 요트경기장','크레이지서퍼스 → 요트탈래 부산본점','에쏘 에스프레소바'],
+        sport:['크레이지서퍼스 · 부산 수영구 광남로48번길 29 1층 · 광안리 SUP·서핑 체험','요트탈래 부산본점 · 부산 해운대구 해운대해변로 84 수영만요트경기장 본관 102호 · 선셋 시간대는 미리 예약해 주세요.'],
+        food:['에쏘 에스프레소바 · 부산 수영구 광안해변로 207 · 광안리 해변 산책 중 들르기 좋은 에스프레소 바'],
         traffic:['2호선 광안역 3번 또는 5번 출구에서 백사장 방향으로 도보 약 10분','요트경기장 방문 전에는 주차 가능 여부와 출항 시간을 확인해 주세요.'],
         parking:[
           {name:'광안리해수욕장 공영주차장', detail:'광안리 해변 인근 · 야경 시간대에는 대기 차량이 많을 수 있어요.', status:'혼잡', className:'busy'},
@@ -183,9 +203,9 @@
         district:'영도구 · 태종대', density:'한적', densityClass:'quiet', densityNote:'도심 해변보다 비교적 여유롭지만, 유람선 운항 시간대에는 방문객이 모일 수 있어요.',
         destination:{name:'태종대',lat:35.052,lng:129.073},
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=129.061%2C35.044%2C129.083%2C35.060&layer=mapnik&marker=35.052%2C129.073',
-        route:['영도 태종대 & 감지해변','태종대 곤포 유람선','자갈마당 해녀촌 → 피아크'],
-        sport:['태종대 곤포 유람선 · 부산 영도구 감지해변길 79 · 해안 절벽과 오륙도 풍경을 둘러볼 수 있어요.','해안 산책에는 편한 신발과 바람막이를 챙기는 것을 추천해요.'],
-        food:['태종대 자갈마당 해녀촌 · 부산 영도구 감지해변길 81 · 숯불 조개구이','피아크(P.ARK) · 부산 영도구 해양로195번길 180 · 항만 풍경을 볼 수 있는 복합문화 카페'],
+        route:['영도 태종대 & 감지해변','태종대곤포유람선','1번해녀집'],
+        sport:['태종대곤포유람선 · 부산 영도구 전망로 24 태종대유원지 내 · 해안 절벽과 오륙도 풍경을 둘러볼 수 있어요.','해안 산책에는 편한 신발과 바람막이를 챙기는 것을 추천해요.'],
+        food:['1번해녀집 · 부산 영도구 감지해변길 81 · 감지해변 바로 앞 조개구이·해물라면'],
         traffic:['부산역 7번 출구 인근 정류장에서 88번 또는 101번 버스 이용','태종대 종점에서 내려 산책로를 따라 이동하세요.'],
         parking:[
           {name:'태종대 유원지 공영주차장', detail:'태종대 입구 인근 · 유람선 운항 시간대에 차량이 몰릴 수 있어요.', status:'보통', className:'normal'},
@@ -198,9 +218,9 @@
         district:'사하구 · 다대포 해수욕장', density:'한적', densityClass:'quiet', densityNote:'해변이 넓어 여유로운 편이에요. 다만 일몰과 낙조분수 시간에는 방문객이 늘어납니다.',
         destination:{name:'다대포 해수욕장',lat:35.052,lng:128.972},
         mapUrl:'https://www.openstreetmap.org/export/embed.html?bbox=128.960%2C35.041%2C128.984%2C35.060&layer=mapnik&marker=35.052%2C128.972',
-        route:['다대포 해수욕장 & 생태탐방로','다대포 카이트서핑 패들보드 클럽','할매집 → 다대포 낙조분수'],
-        sport:['다대포 카이트서핑 패들보드 클럽 · 부산 사하구 다대등대로 14 · 얕은 수심에서 패들보드를 즐길 수 있어요.','일몰과 낙조분수 운영 시간은 방문 전에 확인해 주세요.'],
-        food:['할매집 · 부산 사하구 다대하나거리 40 · 해물파전과 문어삼합','웨이브온 커피 · 부산 기장군 장안읍 해맞이로 286 · 기장으로 코스를 넓힐 때 들르기 좋아요.'],
+        route:['다대포 해수욕장 & 생태탐방로','다대포해양레포츠센터','다대포 할매집 → 다대포 낙조분수'],
+        sport:['다대포해양레포츠센터 · 부산 사하구 몰운대1길 52 · 카이트보딩·SUP·서핑 등 해양레포츠 프로그램','일몰과 낙조분수 운영 시간은 방문 전에 확인해 주세요. 프로그램 운영 여부와 예약 방법은 출발 전에 확인해 주세요.'],
+        food:['다대포 할매집 · 부산 사하구 몰운대1길 55 1층 · 다대포해수욕장역에서 도보 약 7분, 해물파전과 문어삼합'],
         traffic:['1호선 다대포해수욕장역 1번 또는 2번 출구에서 백사장까지 바로 이동할 수 있어요.','차량 이용 시 다대포 해변공원 주차장 위치를 미리 확인해 주세요.'],
         parking:[
           {name:'다대포 해변공원 주차장', detail:'해수욕장 인근 · 해변이 넓어 주간에는 비교적 여유로운 편이에요.', status:'한적', className:'quiet'},
@@ -212,6 +232,42 @@
     let index = 0;
     let answers = [];
     const $ = selector => document.querySelector(selector);
+    const languageLabels = {
+      ko:{login:'로그인', title:'🌊 나만의 부산 바다<br>레저 취향 찾기', sport:'🏄 레저 정보', food:'🍽️ 추천 맛집', traffic:'🚌 교통 안내', retry:'테스트 다시 하기'},
+      'zh-TW':{login:'登入', title:'🌊 找到專屬你的釜山海洋<br>休閒偏好', sport:'🏄 休閒資訊', food:'🍽️ 推薦美食', traffic:'🚌 交通資訊', retry:'重新測驗'},
+      'zh-CN':{login:'登录', title:'🌊 找到专属你的釜山海洋<br>休闲偏好', sport:'🏄 休闲信息', food:'🍽️ 推荐美食', traffic:'🚌 交通信息', retry:'重新测试'},
+      ja:{login:'ログイン', title:'🌊 自分だけの釜山の海<br>レジャータイプ診断', sport:'🏄 レジャー情報', food:'🍽️ おすすめグルメ', traffic:'🚌 交通案内', retry:'もう一度診断'},
+      en:{login:'Sign in', title:'🌊 Find Your Perfect<br>Busan Sea Adventure', sport:'🏄 Activities', food:'🍽️ Food nearby', traffic:'🚌 Getting there', retry:'Take the test again'}
+    };
+
+    function applyLanguage(language) {
+      const labels = languageLabels[language] || languageLabels.ko;
+      document.documentElement.lang = language;
+      document.title = language === 'en' ? 'Find Your Busan Sea Adventure' : '나만의 부산 바다 레저 취향 찾기';
+      $('#accountButton').textContent = labels.login;
+      document.querySelector('h1').innerHTML = labels.title;
+      document.querySelector('[data-tab="sport"]').textContent = labels.sport;
+      document.querySelector('[data-tab="food"]').textContent = labels.food;
+      document.querySelector('[data-tab="traffic"]').textContent = labels.traffic;
+      $('#retry').textContent = labels.retry;
+      localStorage.setItem('busanSeaLanguage', language);
+    }
+
+    const savedLanguage = localStorage.getItem('busanSeaLanguage') || 'ko';
+    $('#languageSelect').value = savedLanguage;
+    applyLanguage(savedLanguage);
+    $('#languageSelect').addEventListener('change', event => {
+      const language = event.target.value;
+      applyLanguage(language);
+      const translateSelect = document.querySelector('.goog-te-combo');
+      if (translateSelect && language !== 'ko') {
+        translateSelect.value = language;
+        translateSelect.dispatchEvent(new Event('change'));
+      } else if (language === 'ko') {
+        document.cookie = 'googtrans=/ko/ko;path=/';
+        window.location.reload();
+      }
+    });
 
     function renderQuestion() {
       const [category, prompt, optionA, optionB] = questions[index];
@@ -245,10 +301,21 @@
       $('#mapCard').innerHTML = `
         <div class="map-heading">
           <div><strong>📍 ${result.district}</strong><small>실제 약도 · OpenStreetMap</small></div>
-          <span class="density ${result.densityClass}">● 예상 ${result.density}</span>
+          <span class="density ${result.densityClass}">● 예상 혼잡도 ${result.density}</span>
         </div>
         <iframe class="map-frame" title="${result.district} 지도" src="${result.mapUrl}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        <p class="map-note">${result.densityNote} 혼잡도는 실시간 수치가 아닌 코스 선택을 돕기 위한 대략적인 안내입니다.</p>`;
+        <div id="weather" class="weather-card" aria-live="polite"><span class="weather-icon">⏳</span><div><strong>${result.destination.name} 현재 날씨</strong><p>날씨 정보를 불러오는 중입니다.</p></div></div>
+        <p class="map-note">${result.densityNote} 예상 혼잡도는 실시간 방문자 수가 아닌 코스 선택용 안내 지표입니다.</p>
+        <section class="congestion-guide" aria-label="예상 혼잡도 판단 기준">
+          <strong>예상 혼잡도 판단 기준</strong>
+          <ul>
+            <li>주말·공휴일·일몰/야간 등 방문 집중 시간대</li>
+            <li>해변 규모와 대표 관광지·행사 밀집도</li>
+            <li>대중교통 접근성 및 인근 공영주차장 이용 여건</li>
+            <li>현재 날씨와 계절별 해양 레저 수요</li>
+          </ul>
+        </section>`;
+      loadWeather(result.destination);
       ['sport','food'].forEach(key => {
         const buttonLabel = key === 'sport' ? '레저 예약 신청' : key === 'food' ? '맛집 예약·웨이팅 신청' : '';
         $(`#${key}`).innerHTML = result[key].map(item => `<article class="info">${item}${buttonLabel ? `<button class="reserve" data-place="${item.replace(/"/g, '&quot;')}">${buttonLabel}</button>` : ''}</article>`).join('');
@@ -265,6 +332,42 @@
         </section>
         <p class="map-note">주차 혼잡도는 실시간 정보가 아닌 방문 시간대 기준의 예상 안내입니다. 출발 전 주차장 운영 정보와 빈자리 여부를 확인해 주세요.</p>`;
       $('#bar').style.width = '100%';
+    }
+
+    function weatherInfo(code, language = 'ko') {
+      const labels = {
+        ko:['맑음','대체로 맑음','흐림','안개','이슬비','비','눈','뇌우','날씨 정보'],
+        'zh-TW':['晴朗','大致晴朗','多雲','有霧','毛毛雨','下雨','下雪','雷雨','天氣資訊'],
+        'zh-CN':['晴朗','大致晴朗','多云','有雾','毛毛雨','下雨','下雪','雷雨','天气信息'],
+        ja:['晴れ','おおむね晴れ','曇り','霧','霧雨','雨','雪','雷雨','天気情報'],
+        en:['Clear','Mostly clear','Cloudy','Foggy','Drizzle','Rain','Snow','Thunderstorm','Weather']
+      }[language] || ['Clear','Mostly clear','Cloudy','Foggy','Drizzle','Rain','Snow','Thunderstorm','Weather'];
+      if ([0].includes(code)) return ['☀️', labels[0]];
+      if ([1,2].includes(code)) return ['🌤️', labels[1]];
+      if ([3].includes(code)) return ['☁️', labels[2]];
+      if ([45,48].includes(code)) return ['🌫️', labels[3]];
+      if ([51,53,55,56,57].includes(code)) return ['🌦️', labels[4]];
+      if ([61,63,65,66,67,80,81,82].includes(code)) return ['🌧️', labels[5]];
+      if ([71,73,75,77,85,86].includes(code)) return ['❄️', labels[6]];
+      if ([95,96,99].includes(code)) return ['⛈️', labels[7]];
+      return ['🌊', labels[8]];
+    }
+
+    async function loadWeather(destination) {
+      const weather = $('#weather');
+      if (!weather) return;
+      try {
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${destination.lat}&longitude=${destination.lng}&current=temperature_2m,wind_speed_10m,weather_code&timezone=Asia%2FSeoul`;
+        const response = await fetch(url);
+        if (!response.ok) throw new Error('weather');
+        const current = (await response.json()).current;
+        const language = $('#languageSelect').value;
+        const locale = {ko:['현재 날씨','기온','풍속'], 'zh-TW':['目前天氣','氣溫','風速'], 'zh-CN':['当前天气','气温','风速'], ja:['現在の天気','気温','風速'], en:['Current weather','Temperature','Wind']}[language] || ['Current weather','Temperature','Wind'];
+        const [icon, label] = weatherInfo(current.weather_code, language);
+        weather.innerHTML = `<span class="weather-icon">${icon}</span><div><strong>${destination.name} · ${locale[0]} · ${label}</strong><p>${locale[1]} ${Math.round(current.temperature_2m)}°C · ${locale[2]} ${Math.round(current.wind_speed_10m)} km/h</p></div>`;
+      } catch (error) {
+        weather.innerHTML = `<span class="weather-icon">🌊</span><div><strong>${destination.name} 현재 날씨</strong><p>날씨 정보를 가져오지 못했습니다. 잠시 후 다시 확인해 주세요.</p></div>`;
+      }
     }
 
     $('#tabs').addEventListener('click', event => {
@@ -354,6 +457,12 @@
 
     renderQuestion();
   </script>
+  <script>
+    window.googleTranslateElementInit = function () {
+      new google.translate.TranslateElement({pageLanguage:'ko', includedLanguages:'zh-TW,zh-CN,ja,en', autoDisplay:false}, 'google_translate_element');
+    };
+  </script>
+  <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js';
     import { getAuth, onAuthStateChanged, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js';
